@@ -5,6 +5,11 @@
 #include <limits>
 #include "RationalExpression.h"
 
+int main() {
+	auto test = RationalExpression(8);
+	cout << test.print();
+}
+
 RationalExpression::RationalExpression(long num, long denom) {
     numerator = num;
     denominator = denom;
@@ -129,5 +134,5 @@ long RationalExpression::maxValue() {
 }
 
 std::string RationalExpression::print() const {
-    return numerator + " / " + denominator;
+    return to_string(numerator) + " / " + to_string(denominator);
 }
