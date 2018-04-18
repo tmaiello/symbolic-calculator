@@ -5,10 +5,8 @@
 #ifndef EXPRESSIONLIST_H
 #define EXPRESSIONLIST_H
 
-#include <string>
 #include <vector>
 #include "Operator.h"
-//#include "RationalExpression.h"
 using namespace std;
 
 /*
@@ -23,6 +21,8 @@ class ExpressionList {
 	vector<Expression*> tokenList;
 	vector<Expression*> postfix;
 
+	bool isNumber(char toTest);
+	bool isValidChar(char toTest);
 	void processToTokens();
 	void checkTokenSyntax();
 	void convertToPostfix();
