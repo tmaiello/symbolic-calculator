@@ -7,7 +7,7 @@
 Operator::Operator(OperatorToken type) : type(type) {}
 
 // Returns the precedence (lower is first) of this operator
-int Operator::GetPrecedence() const {
+int Operator::getPrecedence() const {
 	switch (type) {
 	case OperatorToken::L_PAREN:
 	case OperatorToken::R_PAREN:
@@ -34,7 +34,7 @@ int Operator::GetPrecedence() const {
 	}
 }
 
-OperatorToken Operator::GetOperatorToken(char raw) {
+OperatorToken Operator::getOperatorToken(char raw) {
 	switch (raw) {
 	case '+':
 		return OperatorToken::ADD;

@@ -42,9 +42,9 @@ class Operator : Expression {
 	const int RIGHT_ASSOC = 1;
 
 	Operator(OperatorToken type);
-	int GetPrecedence() const;		// returns the precedence (lower is first) of this operator
+	int getPrecedence() const;		// returns the precedence (lower is first) of this operator
 
-	static OperatorToken GetOperatorToken(char raw);
+	static OperatorToken getOperatorToken(char raw);
 };
 
 #endif

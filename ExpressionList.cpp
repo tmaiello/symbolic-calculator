@@ -2,34 +2,34 @@
 *	Defines the ExpressionList class, which is processed by the Interpreter to calculate a rational numerical result for the input.
 */
 
-#include "ExpressionList.h";
+#include "ExpressionList.h"
 
 ExpressionList::ExpressionList(string input) : input(input) {};
 
 /* PRIVATE HELPER METHODS */
 
-void ExpressionList::ProcessToTokens() {
+void ExpressionList::processToTokens() {
 
 }
 
-void ExpressionList::CheckTokenSyntax() {
+void ExpressionList::checkTokenSyntax() {
 
 }
 
-void ExpressionList::ConvertToPostfix() {
+void ExpressionList::convertToPostfix() {
 
 }
 
 /* PUBLIC ACCESSOR METHODS */
 
-string ExpressionList::GetInput() const {
+string ExpressionList::getInput() const {
 	return input;
 }
 
-vector<Expression*> ExpressionList::GetTokenList() const {
+vector<Expression*> ExpressionList::getTokenList() const {
 	return tokenList;
 }
 
-vector<Expression*> ExpressionList::GetInPostfix() const {
+vector<Expression*> ExpressionList::getInPostfix() const {
 	return postfix;
 }
