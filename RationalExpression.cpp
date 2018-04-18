@@ -6,8 +6,16 @@
 #include "RationalExpression.h"
 
 int main() {
-	auto test = RationalExpression(8);
-	cout << test.print();
+    auto fracOne = new RationalExpression(564, 340);
+    auto fracTwo = new RationalExpression(26, 47);
+    std::cout << RationalExpression::simplify(RationalExpression::add(*fracOne, *fracTwo)).print() << std::endl;
+    std::cout << RationalExpression::simplify(RationalExpression::subtract(*fracOne, *fracTwo)).print() << std::endl;
+    std::cout << RationalExpression::simplify(RationalExpression::multiply(*fracOne, *fracTwo)).print() << std::endl;
+    std::cout << RationalExpression::simplify(RationalExpression::divide(*fracOne, *fracTwo)).print() << std::endl;
+    std::cout << RationalExpression("456.2771").print() << std::endl;
+    std::cout << RationalExpression("3.14159").print() << std::endl;
+    std::cout << RationalExpression("8").print() << std::endl;
+    return 0;
 }
 
 RationalExpression::RationalExpression(long num, long denom) {
@@ -21,9 +29,6 @@ RationalExpression::RationalExpression(long value) {
 }
 
 RationalExpression::RationalExpression(std::string value) {
-    std::ostringstream stream;
-    stream.precision(std::numeric_limits<double>::digits10);
-    stream << std::fixed << value;
     std::string stringValue = value;
     long period;
     period = -1;
@@ -33,6 +38,11 @@ RationalExpression::RationalExpression(std::string value) {
         if (stringValue.at(x) == '.') {
             period = x;
         }
+    }
+    if (period == -1) {
+        long numValue = stoi(stringValue);
+        numerator = numValue;
+        denominator = 1;
     }
     if (period != -1) {
         long beforeDecimal;
@@ -54,7 +64,7 @@ RationalExpression::RationalExpression(std::string value) {
         }
         long newDenominator;
         newDenominator = 1;
-        for (unsigned x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
+        for (unsigned long x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
             newDenominator = newDenominator * 10;
         }
         long afterDecimal;
@@ -120,8 +130,8 @@ RationalExpression RationalExpression::simplify(RationalExpression input) {
                 denominator = denominator / base;
             }
         }
+        return {numerator, denominator};
     }
-	return { numerator, denominator };
 }
 
 long RationalExpression::maxValue() {
@@ -134,5 +144,5 @@ long RationalExpression::maxValue() {
 }
 
 std::string RationalExpression::print() const {
-    return to_string(numerator) + " / " + to_string(denominator);
+    return std::to_string(numerator) + " / " + std::to_string(denominator);
 }
