@@ -5,19 +5,6 @@
 #include <limits>
 #include "RationalExpression.h"
 
-int main() {
-    auto fracOne = new RationalExpression(564, 340);
-    auto fracTwo = new RationalExpression(26, 47);
-    RationalExpression::simplify(RationalExpression::add(*fracOne, *fracTwo)).print();
-    RationalExpression::simplify(RationalExpression::subtract(*fracOne, *fracTwo)).print();
-    RationalExpression::simplify(RationalExpression::multiply(*fracOne, *fracTwo)).print();
-    RationalExpression::simplify(RationalExpression::divide(*fracOne, *fracTwo)).print();
-    RationalExpression("456.2771").print();
-    RationalExpression("3.14159").print();
-    RationalExpression("1.414").print();
-    return 0;
-}
-
 RationalExpression::RationalExpression(long num, long denom) {
     numerator = num;
     denominator = denom;
@@ -141,6 +128,6 @@ long RationalExpression::maxValue() {
     }
 }
 
-void RationalExpression::print() {
-    std::cout << numerator << " / " << denominator << std::endl;
+std::string RationalExpression::print() const {
+    return numerator + " / " + denominator;
 }

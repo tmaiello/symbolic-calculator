@@ -17,8 +17,7 @@ public:
     static RationalExpression divide(RationalExpression one, RationalExpression two);
     static RationalExpression simplify(RationalExpression input);
     long maxValue();
-    void print();
-
+    std::string print() const;
 };
 
 #endif //RATIONALEXPRESSION_RATIONALEXPRESSION_H

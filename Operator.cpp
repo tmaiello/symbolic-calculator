@@ -29,12 +29,17 @@ int Operator::getPrecedence() const {
 		break;
 
 	case OperatorToken::UNKNOWN:
+	default:
 		return -1;	// error output
 		break;
 	}
 }
 
-OperatorToken Operator::getOperatorToken(char raw) {
+string Operator::print() const {
+	return string(1, (char)type);
+}
+
+OperatorToken getOperatorToken(char raw) {
 	switch (raw) {
 	case '+':
 		return OperatorToken::ADD;
