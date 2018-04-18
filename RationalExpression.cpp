@@ -6,16 +6,8 @@
 #include "RationalExpression.h"
 
 int main() {
-    auto fracOne = new RationalExpression(564, 340);
-    auto fracTwo = new RationalExpression(26, 47);
-    RationalExpression::simplify(RationalExpression::add(*fracOne, *fracTwo)).print();
-    RationalExpression::simplify(RationalExpression::subtract(*fracOne, *fracTwo)).print();
-    RationalExpression::simplify(RationalExpression::multiply(*fracOne, *fracTwo)).print();
-    RationalExpression::simplify(RationalExpression::divide(*fracOne, *fracTwo)).print();
-    RationalExpression("456.2771").print();
-    RationalExpression("3.14159").print();
-    RationalExpression("1.414").print();
-    return 0;
+	auto test = RationalExpression(8);
+	cout << test.print();
 }
 
 RationalExpression::RationalExpression(long num, long denom) {
@@ -35,25 +27,25 @@ RationalExpression::RationalExpression(std::string value) {
     std::string stringValue = value;
     long period;
     period = -1;
-    u_long stringSize;
+    unsigned long stringSize;
     stringSize = stringValue.size();
-    for (u_long x = 0; x < stringSize; x++) {
+    for (unsigned long x = 0; x < stringSize; x++) {
         if (stringValue.at(x) == '.') {
             period = x;
         }
     }
     if (period != -1) {
         long beforeDecimal;
-        beforeDecimal = stoi(stringValue.substr(0, static_cast<u_long>(period)));
+        beforeDecimal = stoi(stringValue.substr(0, static_cast<unsigned long>(period)));
         std::string afterDecimalString;
-        afterDecimalString = stringValue.substr(static_cast<u_long>(period) + 1);
+        afterDecimalString = stringValue.substr(static_cast<unsigned long>(period) + 1);
         std::string afterDecimalStringNoAppendedZero;
         afterDecimalStringNoAppendedZero.append(afterDecimalString);
         afterDecimalStringNoAppendedZero.erase(afterDecimalStringNoAppendedZero.find_last_not_of('0') + 1, std::string::npos);
-        u_long afterDecimalNoAppendedZeroSize = afterDecimalStringNoAppendedZero.size();
+        unsigned long afterDecimalNoAppendedZeroSize = afterDecimalStringNoAppendedZero.size();
         int beginningZero;
         beginningZero = 0;
-        for (u_long x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
+        for (unsigned long x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
             if (afterDecimalStringNoAppendedZero.at(x) == '0') {
                 beginningZero++;
             } else {
@@ -62,7 +54,7 @@ RationalExpression::RationalExpression(std::string value) {
         }
         long newDenominator;
         newDenominator = 1;
-        for (int x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
+        for (unsigned x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
             newDenominator = newDenominator * 10;
         }
         long afterDecimal;
@@ -128,8 +120,8 @@ RationalExpression RationalExpression::simplify(RationalExpression input) {
                 denominator = denominator / base;
             }
         }
-        return {numerator, denominator};
     }
+	return { numerator, denominator };
 }
 
 long RationalExpression::maxValue() {
@@ -141,6 +133,6 @@ long RationalExpression::maxValue() {
     }
 }
 
-void RationalExpression::print() {
-    std::cout << numerator << " / " << denominator << std::endl;
+std::string RationalExpression::print() const {
+    return to_string(numerator) + " / " + to_string(denominator);
 }

@@ -23,16 +23,16 @@ class ExpressionList {
 	vector<Expression*> tokenList;
 	vector<Expression*> postfix;
 
-	void ProcessToTokens();
-	void CheckTokenSyntax();
-	void ConvertToPostfix();
+	void processToTokens();
+	void checkTokenSyntax();
+	void convertToPostfix();
 
 	public:
 	ExpressionList(string input);
 
-	string GetInput() const;
-	vector<Expression*> GetTokenList() const;
-	vector<Expression*> GetInPostfix() const;
+	string getInput() const;
+	vector<Expression*> getTokenList() const;
+	vector<Expression*> getInPostfix() const;
 };
 
 #endif
