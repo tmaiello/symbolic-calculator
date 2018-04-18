@@ -35,25 +35,25 @@ RationalExpression::RationalExpression(std::string value) {
     std::string stringValue = value;
     long period;
     period = -1;
-    u_long stringSize;
+    unsigned long stringSize;
     stringSize = stringValue.size();
-    for (u_long x = 0; x < stringSize; x++) {
+    for (unsigned long x = 0; x < stringSize; x++) {
         if (stringValue.at(x) == '.') {
             period = x;
         }
     }
     if (period != -1) {
         long beforeDecimal;
-        beforeDecimal = stoi(stringValue.substr(0, static_cast<u_long>(period)));
+        beforeDecimal = stoi(stringValue.substr(0, static_cast<unsigned long>(period)));
         std::string afterDecimalString;
-        afterDecimalString = stringValue.substr(static_cast<u_long>(period) + 1);
+        afterDecimalString = stringValue.substr(static_cast<unsigned long>(period) + 1);
         std::string afterDecimalStringNoAppendedZero;
         afterDecimalStringNoAppendedZero.append(afterDecimalString);
         afterDecimalStringNoAppendedZero.erase(afterDecimalStringNoAppendedZero.find_last_not_of('0') + 1, std::string::npos);
-        u_long afterDecimalNoAppendedZeroSize = afterDecimalStringNoAppendedZero.size();
+        unsigned long afterDecimalNoAppendedZeroSize = afterDecimalStringNoAppendedZero.size();
         int beginningZero;
         beginningZero = 0;
-        for (u_long x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
+        for (unsigned long x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
             if (afterDecimalStringNoAppendedZero.at(x) == '0') {
                 beginningZero++;
             } else {
@@ -62,7 +62,7 @@ RationalExpression::RationalExpression(std::string value) {
         }
         long newDenominator;
         newDenominator = 1;
-        for (int x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
+        for (unsigned x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
             newDenominator = newDenominator * 10;
         }
         long afterDecimal;
@@ -128,8 +128,8 @@ RationalExpression RationalExpression::simplify(RationalExpression input) {
                 denominator = denominator / base;
             }
         }
-        return {numerator, denominator};
     }
+	return { numerator, denominator };
 }
 
 long RationalExpression::maxValue() {
