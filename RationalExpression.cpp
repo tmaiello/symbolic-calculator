@@ -29,7 +29,7 @@ RationalExpression::RationalExpression(long value) {
 }
 
 RationalExpression::RationalExpression(std::string value) {
-    string stringValue = std::move(value);
+    std::string stringValue = std::move(value);
     long period;
     period = -1;
     unsigned long stringSize;
