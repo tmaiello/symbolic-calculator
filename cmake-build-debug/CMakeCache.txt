@@ -215,12 +215,6 @@ ProcessorCount_cmd_getconf:FILEPATH=/usr/bin/getconf.exe
 ProcessorCount_cmd_sysctl:FILEPATH=ProcessorCount_cmd_sysctl-NOTFOUND
 
 //Value Computed by CMake
-RationalExpression_BINARY_DIR:STATIC=/cygdrive/c/Users/Boris/CLionProjects/symbolic-calculator/cmake-build-debug
-
-//Value Computed by CMake
-RationalExpression_SOURCE_DIR:STATIC=/cygdrive/c/Users/Boris/CLionProjects/symbolic-calculator
-
-//Value Computed by CMake
 symbolic-calculator_BINARY_DIR:STATIC=/cygdrive/c/Users/Boris/CLionProjects/symbolic-calculator/cmake-build-debug
 
 //Value Computed by CMake
