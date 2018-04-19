@@ -1,0 +1,1 @@
+C:/cygwin64/bin/g++.exe -g  -Wl,--enable-auto-import CMakeFiles/RationalExpression.dir/RationalExpression.cpp.o  -o RationalExpression.exe -Wl,--out-implib,libRationalExpression.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
