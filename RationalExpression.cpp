@@ -29,7 +29,7 @@ RationalExpression::RationalExpression(long value) {
 }
 
 RationalExpression::RationalExpression(std::string value) {
-    std::string stringValue = value;
+    std::string stringValue = std::move(value);
     long period;
     period = -1;
     unsigned long stringSize;
@@ -47,34 +47,30 @@ RationalExpression::RationalExpression(std::string value) {
     if (period != -1) {
         long beforeDecimal;
         beforeDecimal = stoi(stringValue.substr(0, static_cast<unsigned long>(period)));
-        std::string afterDecimalString;
-        afterDecimalString = stringValue.substr(static_cast<unsigned long>(period) + 1);
-        std::string afterDecimalStringNoAppendedZero;
-        afterDecimalStringNoAppendedZero.append(afterDecimalString);
-        afterDecimalStringNoAppendedZero.erase(afterDecimalStringNoAppendedZero.find_last_not_of('0') + 1, std::string::npos);
-        unsigned long afterDecimalNoAppendedZeroSize = afterDecimalStringNoAppendedZero.size();
-        int beginningZero;
-        beginningZero = 0;
-        for (unsigned long x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
-            if (afterDecimalStringNoAppendedZero.at(x) == '0') {
-                beginningZero++;
-            } else {
-                break;
-            }
-        }
-        long newDenominator;
-        newDenominator = 1;
-        for (unsigned long x = 0; x < afterDecimalNoAppendedZeroSize; x++) {
-            newDenominator = newDenominator * 10;
-        }
-        long afterDecimal;
-        afterDecimal = stoi(afterDecimalStringNoAppendedZero);
-        RationalExpression integer = RationalExpression(beforeDecimal);
-        RationalExpression decimal = RationalExpression(afterDecimal, newDenominator);
-        RationalExpression finalAnswer = add(integer, decimal);
+        auto integer = RationalExpression(beforeDecimal);
+        auto pair = std::make_pair(stringValue , period);
+        auto decimal = makeDecimalFraction(pair);
+        auto finalAnswer = add(integer, decimal);
         numerator = finalAnswer.numerator;
         denominator = finalAnswer.denominator;
     }
+}
+
+RationalExpression RationalExpression::makeDecimalFraction(std::pair<std::string, long> &value) {
+    std::string afterDecimalString;
+    afterDecimalString = value.first.substr(static_cast<unsigned long>(value.second) + 1);
+    std::string removedZeros;
+    removedZeros.append(afterDecimalString);
+    removedZeros.erase(removedZeros.find_last_not_of('0') + 1, std::string::npos);
+    unsigned long removedZerosSize = removedZeros.size();
+    long newDenominator;
+    newDenominator = 1;
+    for (unsigned long x = 0; x < removedZerosSize; x++) {
+        newDenominator = newDenominator * 10;
+    }
+    long afterDecimal;
+    afterDecimal = stoi(removedZeros);
+    return {afterDecimal, newDenominator};
 }
 
 RationalExpression RationalExpression::add(RationalExpression one, RationalExpression two) { //one + two
@@ -146,3 +142,5 @@ long RationalExpression::maxValue() {
 std::string RationalExpression::print() const {
     return std::to_string(numerator) + " / " + std::to_string(denominator);
 }
+
+
