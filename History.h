@@ -1,5 +1,5 @@
 //
-// Created by Ryan Solomon on 4/19/18.
+// Defines the History class which stores expression history.
 //
 
 #ifndef SYMBOLIC_CALCULATOR_HISTORY_H
@@ -15,10 +15,14 @@ using namespace std;
 
 class History {
 
+private:
+    list<pair<ExpressionList, RationalExpression>> listOfPairs;
 
-    void createPair(ExpressionList object1, RationalExpression object2);
-    void storePair(ExpressionList object1, RationalExpression object2);
-
+public:
+    History();
+    pair<ExpressionList, RationalExpression> createPair(ExpressionList object1, RationalExpression object2);
+    void storePair(pair<ExpressionList, RationalExpression> pair1);
+    void printPairs(list<pair<ExpressionList, RationalExpression>> listOfPairs);
 };
 
 

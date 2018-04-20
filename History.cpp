@@ -1,45 +1,35 @@
 using namespace std;
 #include "RationalExpression.h"
 #include "ExpressionList.h"
+#include "History.h"
 #include <list>
 #include <iostream>
 
+History::History() {
 
-
-class History{
-
-public:
-    ExpressionList object1;
-    RationalExpression object2;
-
-private:
     list<pair<ExpressionList, RationalExpression>> listOfPairs;
 
+}
+
+void History::storePair(pair<ExpressionList, RationalExpression> pair1) {
+
+    listOfPairs.push_back(pair1);
+
+}
 
 
-    void createPair(ExpressionList object1, RationalExpression object2){
+pair<ExpressionList, RationalExpression> History::createPair(ExpressionList object1, RationalExpression object2){
 
-        pair<ExpressionList, RationalExpression> pair1;
-        pair1 = make_pair(object1, object2);
-        History a;
-        a.storePair(pair1);
+    auto pair1 = make_pair(object1, object2);
+    return pair1;
 
-    }
+}
 
-    void storePair(pair<ExpressionList, RationalExpression> pair1){
+void History::printPairs(list<pair<ExpressionList, RationalExpression>> listOfPairs){
 
-        listOfPairs.push_back(pair1);
-
-    }
-
-    void printPairs(list<pair<ExpressionList, RationalExpression>> listOfPairs){
-
-        while (!listOfPairs.empty()) {
-           listOfPairs.pop_back();
-        }
-
-
+    while (!listOfPairs.empty()) {
+        listOfPairs.pop_back();
     }
 
 
-};
+}
