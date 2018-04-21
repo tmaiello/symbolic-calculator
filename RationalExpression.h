@@ -11,13 +11,14 @@ public:
     RationalExpression(long num, long denom);
     explicit RationalExpression(long value);
     explicit RationalExpression(std::string value);
+    static RationalExpression makeDecimalFraction(std::pair<std::string, long> &value);
     static RationalExpression add(RationalExpression one, RationalExpression two);
     static RationalExpression subtract(RationalExpression one, RationalExpression two);
     static RationalExpression multiply(RationalExpression one, RationalExpression two);
     static RationalExpression divide(RationalExpression one, RationalExpression two);
     static RationalExpression simplify(RationalExpression input);
     long maxValue();
-    std::string print() const;
+    std::string print() const override;
 };
 
 #endif //RATIONALEXPRESSION_RATIONALEXPRESSION_H
