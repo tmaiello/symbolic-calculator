@@ -48,7 +48,7 @@ void ExpressionList::processToTokens() {
 			// process the whole number
 			cout << " - Creating new number: " << cleaned.substr(i, end - i) << endl;
 			//RationalExpression* test = new RationalExpression(cleaned.substr(i, end - i));
-			//tokenList.push_back(new RationalExpression(cleaned.substr(i, end - i)));
+			tokenList.push_back(new RationalExpression(cleaned.substr(i, end - i)));
 			i = end - 1;
 			cout << " - i is now " << i << ", new start char is " << cleaned[i] << endl;
 		}
@@ -59,7 +59,7 @@ void ExpressionList::processToTokens() {
 
 			if (isValidChar(cleaned[i]))
 				cout << "Creating new operator: " << cleaned[i] << endl;
-			//tokenList.push_back(new Operator(getOperatorToken(cleaned[i])));
+			tokenList.push_back(new Operator(getOperatorToken(cleaned[i])));
 		}
 	}
 
