@@ -126,8 +126,8 @@ RationalExpression RationalExpression::simplify(RationalExpression input) {
                 denominator = denominator / base;
             }
         }
-        return {numerator, denominator};
     }
+    return {numerator, denominator};
 }
 
 long RationalExpression::maxValue() {
