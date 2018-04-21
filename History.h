@@ -20,7 +20,7 @@ private:
 
 public:
     History();
-    pair<ExpressionList, RationalExpression> createPair(ExpressionList object1, RationalExpression object2);
+    pair<ExpressionList, RationalExpression> createPair(ExpressionList *object1, RationalExpression *object2);
     void storePair(pair<ExpressionList, RationalExpression> pair1);
     pair<ExpressionList, RationalExpression> iterator(int index);
     list<pair<ExpressionList, RationalExpression>> returnList();
