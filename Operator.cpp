@@ -39,6 +39,14 @@ string Operator::print() const {
 	return string(1, (char)type);
 }
 
+bool Operator::isNumber() const {
+	return false;
+}
+
+bool Operator::isOperator() const {
+	return true;
+}
+
 OperatorToken getOperatorToken(char raw) {
 	switch (raw) {
 	case '+':

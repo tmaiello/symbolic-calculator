@@ -5,9 +5,12 @@
 #include "ExpressionList.h"
 #include "RationalExpression.h"
 #include <iostream>
+#include <stack>
 
 ExpressionList::ExpressionList(string input) : input(input) {
 	processToTokens();
+	checkTokenSyntax();
+	convertToPostfix();
 }
 
 /* PRIVATE HELPER METHODS */
@@ -29,7 +32,6 @@ void ExpressionList::processToTokens() {
 
 	// start processing
 	for (unsigned i = 0; i < cleaned.length(); i++) {
-		cout << "i is " << i << endl;
 		// process numbers
 		if (isNumber(cleaned[i])) {
 			// count until end of number
@@ -65,7 +67,24 @@ void ExpressionList::checkTokenSyntax() {
 }
 
 void ExpressionList::convertToPostfix() {
+	stack<Operator>* operators = new stack<Operator>();
 
+	for (unsigned i = 0; i < tokenList.size(); i++)
+	{
+		cout << tokenList[i]->print() << " -> ";
+	}
+	cout << "END" << endl;
+
+	for (unsigned i = 0; i < tokenList.size(); i++)
+	{
+		// Check if number or operator
+		if (tokenList[i]->isNumber())
+			cout << "NUM -> ";
+		
+		if (tokenList[i]->isOperator())
+			cout << "OP -> ";
+	}
+	cout << "END" << endl;
 }
 
 /* PUBLIC ACCESSOR METHODS */
