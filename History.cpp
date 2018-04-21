@@ -1,4 +1,3 @@
-using namespace std;
 #include "RationalExpression.h"
 #include "ExpressionList.h"
 #include "History.h"
@@ -16,9 +15,9 @@ History::History() {
 //The createPair method provides a function that takes in an object
 //from each class (ExpressionList and RationalExpression) and
 //pairs them together using the 'pair' c++ implemented library.
-pair<ExpressionList, RationalExpression> History::createPair(ExpressionList object1, RationalExpression object2){
+pair<ExpressionList, RationalExpression> History::createPair(ExpressionList *object1, RationalExpression *object2){
 
-    auto pair1 = make_pair(object1, object2);
+    pair<ExpressionList, RationalExpression> pair1 = make_pair(*object1, *object2);
     return pair1;
 
 }
@@ -38,16 +37,13 @@ void History::storePair(pair<ExpressionList, RationalExpression> pair1) {
 //times and point to the element in the list at that given index.
 pair<ExpressionList, RationalExpression> History::iterator(int index) {
 
-
-    if (listOfPairs.size() > index){
-
         list<pair<ExpressionList, RationalExpression>>:: iterator it;
         it = listOfPairs.begin();
         advance(it, index);
 
         return *it;
 
-    }
+
 }
 
 //If the user wishes to see the entire list of pairs
@@ -57,3 +53,5 @@ list<pair<ExpressionList, RationalExpression>> History::returnList(){
     return listOfPairs;
 
 }
+
+
