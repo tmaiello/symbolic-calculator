@@ -42,7 +42,7 @@ void History::iterator(int index) {
 
         list<pair<ExpressionList, RationalExpression>>:: iterator it;
         it = listOfPairs.begin();
-        return std::advance(it, index);
+        return advance(it, index);
 
     }
 }
