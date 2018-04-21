@@ -36,13 +36,16 @@ void History::storePair(pair<ExpressionList, RationalExpression> pair1) {
 //that represents the index of the pair they wish to access.
 //Then, the method will use std::advance  to call on  the iterator 'index'
 //times and point to the element in the list at that given index.
-void History::iterator(int index) {
+pair<ExpressionList, RationalExpression> History::iterator(int index) {
+
 
     if (listOfPairs.size() > index){
 
         list<pair<ExpressionList, RationalExpression>>:: iterator it;
         it = listOfPairs.begin();
-        return advance(it, index);
+        advance(it, index);
+
+        return *it;
 
     }
 }
