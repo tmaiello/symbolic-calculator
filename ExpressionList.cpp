@@ -137,11 +137,3 @@ vector<Expression*> ExpressionList::getTokenList() const {
 vector<Expression*> ExpressionList::getInPostfix() const {
 	return postfix;
 }
-
-
-
-int main() {
-	string input = "(4 * (21/3) - 16/2) / 10";
-
-	ExpressionList* test = new ExpressionList(input);
-}
