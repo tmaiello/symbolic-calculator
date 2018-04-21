@@ -43,6 +43,7 @@ class Operator : public Expression {
 	const int RIGHT_ASSOC = 1;
 
 	Operator(OperatorToken type);
+	OperatorToken getType() const;
 	int getPrecedence() const;		// returns the precedence (lower is first) of this operator
 	string print() const;
 

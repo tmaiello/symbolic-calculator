@@ -67,7 +67,7 @@ void ExpressionList::checkTokenSyntax() {
 }
 
 void ExpressionList::convertToPostfix() {
-	stack<Operator>* operators = new stack<Operator>();
+	stack<Operator*> operators;
 
 	for (unsigned i = 0; i < tokenList.size(); i++)
 	{
@@ -78,13 +78,50 @@ void ExpressionList::convertToPostfix() {
 	for (unsigned i = 0; i < tokenList.size(); i++)
 	{
 		// Check if number or operator
-		if (tokenList[i]->isNumber())
-			cout << "NUM -> ";
-		
-		if (tokenList[i]->isOperator())
-			cout << "OP -> ";
+		if (tokenList[i]->isNumber()) {
+			RationalExpression* number = (RationalExpression*)tokenList[i];
+
+			postfix.push_back(number);
+		}
+
+		if (tokenList[i]->isOperator()) {
+			Operator* op = (Operator*)tokenList[i];
+
+			// Handle normal operators
+			if (op->getType() != OperatorToken::L_PAREN && op->getType() != OperatorToken::R_PAREN) {
+				while (operators.size() > 0 && operators.top()->getPrecedence() < op->getPrecedence()) {
+					postfix.push_back(operators.top());
+					operators.pop();
+				}
+
+				operators.push(op);
+			}
+
+			// Handle parentheses
+			else if (op->getType() == OperatorToken::L_PAREN) {
+				operators.push(op);
+			}
+
+			else if (op->getType() == OperatorToken::R_PAREN) {
+				while (operators.top()->getType() != OperatorToken::L_PAREN) {
+					postfix.push_back(operators.top());
+					operators.pop();
+				}
+				
+				operators.pop();	// get rid of remaining left parenthesis
+			}
+		}
 	}
-	cout << "END" << endl;
+
+	// pop remaining operators
+	while (operators.size() > 0) {
+		postfix.push_back(operators.top());
+		operators.pop();
+	}
+
+	for (unsigned i = 0; i < postfix.size(); i++)
+		cout << postfix[i]->print() << " >>> ";
+	cout << " END " << endl;
 }
 
 /* PUBLIC ACCESSOR METHODS */
@@ -104,7 +141,7 @@ vector<Expression*> ExpressionList::getInPostfix() const {
 
 
 int main() {
-	string input = "12*13+145*20-16+57-6!";
+	string input = "(4 * (21/3) - 16/2) / 10";
 
 	ExpressionList* test = new ExpressionList(input);
 }
