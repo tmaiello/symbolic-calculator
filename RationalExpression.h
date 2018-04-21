@@ -5,19 +5,19 @@
 
 class RationalExpression : public Expression {
 private:
-    long numerator;
-    long denominator;
+    long long numerator;
+    long long denominator;
 public:
-    RationalExpression(long num, long denom);
-    explicit RationalExpression(long value);
+    RationalExpression(long long num, long long denom);
+    explicit RationalExpression(long long value);
     explicit RationalExpression(std::string value);
-    static RationalExpression makeDecimalFraction(std::pair<std::string, long> &value);
+    static RationalExpression makeDecimalFraction(std::pair<std::string, long long> &value);
     static RationalExpression add(RationalExpression one, RationalExpression two);
     static RationalExpression subtract(RationalExpression one, RationalExpression two);
     static RationalExpression multiply(RationalExpression one, RationalExpression two);
     static RationalExpression divide(RationalExpression one, RationalExpression two);
     static RationalExpression simplify(RationalExpression input);
-    long maxValue();
+    long long maxValue();
     std::string print() const override;
 };
 

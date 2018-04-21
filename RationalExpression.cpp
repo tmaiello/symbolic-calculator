@@ -12,41 +12,41 @@ int main() {
     std::cout << RationalExpression::simplify(RationalExpression::subtract(*fracOne, *fracTwo)).print() << std::endl;
     std::cout << RationalExpression::simplify(RationalExpression::multiply(*fracOne, *fracTwo)).print() << std::endl;
     std::cout << RationalExpression::simplify(RationalExpression::divide(*fracOne, *fracTwo)).print() << std::endl;
-    std::cout << RationalExpression("456.2771").print() << std::endl;
+    std::cout << RationalExpression("999999999999999999").print() << std::endl;
     std::cout << RationalExpression("3.14159").print() << std::endl;
     std::cout << RationalExpression("8").print() << std::endl;
     return 0;
 }
 
-RationalExpression::RationalExpression(long num, long denom) {
+RationalExpression::RationalExpression(long long num, long long denom) {
     numerator = num;
     denominator = denom;
 }
 
-RationalExpression::RationalExpression(long value) {
+RationalExpression::RationalExpression(long long value) {
     numerator = value;
     denominator = 1;
 }
 
 RationalExpression::RationalExpression(std::string value) {
     std::string stringValue = std::move(value);
-    long period;
+    long long period;
     period = -1;
-    unsigned long stringSize;
+    unsigned long long stringSize;
     stringSize = stringValue.size();
-    for (unsigned long x = 0; x < stringSize; x++) {
+    for (unsigned long long x = 0; x < stringSize; x++) {
         if (stringValue.at(x) == '.') {
             period = x;
         }
     }
     if (period == -1) {
-        long numValue = stoi(stringValue);
+        long long numValue = stoll(stringValue);
         numerator = numValue;
         denominator = 1;
     }
     if (period != -1) {
-        long beforeDecimal;
-        beforeDecimal = stoi(stringValue.substr(0, static_cast<unsigned long>(period)));
+        long long beforeDecimal;
+        beforeDecimal = stoll(stringValue.substr(0, static_cast<unsigned long long>(period)));
         auto integer = RationalExpression(beforeDecimal);
         auto pair = std::make_pair(stringValue , period);
         auto decimal = makeDecimalFraction(pair);
@@ -56,71 +56,71 @@ RationalExpression::RationalExpression(std::string value) {
     }
 }
 
-RationalExpression RationalExpression::makeDecimalFraction(std::pair<std::string, long> &value) {
+RationalExpression RationalExpression::makeDecimalFraction(std::pair<std::string, long long> &value) {
     std::string afterDecimalString;
-    afterDecimalString = value.first.substr(static_cast<unsigned long>(value.second) + 1);
+    afterDecimalString = value.first.substr(static_cast<unsigned long long>(value.second) + 1);
     std::string removedZeros;
     removedZeros.append(afterDecimalString);
     removedZeros.erase(removedZeros.find_last_not_of('0') + 1, std::string::npos);
-    unsigned long removedZerosSize = removedZeros.size();
-    long newDenominator;
+    unsigned long long removedZerosSize = removedZeros.size();
+    long long newDenominator;
     newDenominator = 1;
-    for (unsigned long x = 0; x < removedZerosSize; x++) {
+    for (unsigned long long x = 0; x < removedZerosSize; x++) {
         newDenominator = newDenominator * 10;
     }
-    long afterDecimal;
-    afterDecimal = stoi(removedZeros);
+    long long afterDecimal;
+    afterDecimal = stoll(removedZeros);
     return {afterDecimal, newDenominator};
 }
 
 RationalExpression RationalExpression::add(RationalExpression one, RationalExpression two) { //one + two
-    long newDenom;
+    long long newDenom;
     newDenom = one.denominator * two.denominator;
-    long oneNumerator;
+    long long oneNumerator;
     oneNumerator = one.numerator * two.denominator;
-    long twoNumerator;
+    long long twoNumerator;
     twoNumerator = two.numerator * one.denominator;
-    long sumNumerator;
+    long long sumNumerator;
     sumNumerator = oneNumerator + twoNumerator;
     return {sumNumerator, newDenom};
 }
 
 RationalExpression RationalExpression::subtract(RationalExpression one, RationalExpression two) { //one - two
-    long newDenom;
+    long long newDenom;
     newDenom = one.denominator * two.denominator;
-    long oneNumerator;
+    long long oneNumerator;
     oneNumerator = one.numerator * two.denominator;
-    long twoNumerator;
+    long long twoNumerator;
     twoNumerator = two.numerator * one.denominator;
-    long sumNumerator;
+    long long sumNumerator;
     sumNumerator = oneNumerator - twoNumerator;
     return {sumNumerator, newDenom};
 }
 
 RationalExpression RationalExpression::multiply(RationalExpression one, RationalExpression two) { //one * two
-    long newDenom;
+    long long newDenom;
     newDenom = one.denominator * two.denominator;
-    long newNumerator;
+    long long newNumerator;
     newNumerator = one.numerator * two.numerator;
     return {newNumerator, newDenom};
 }
 
 RationalExpression RationalExpression::divide(RationalExpression one, RationalExpression two) { //one / two
-    long newDenom;
+    long long newDenom;
     newDenom = one.denominator * two.numerator;
-    long newNumerator;
+    long long newNumerator;
     newNumerator = one.numerator * two.denominator;
     return {newNumerator, newDenom};
 }
 
 
 RationalExpression RationalExpression::simplify(RationalExpression input) {
-    long numerator;
+    long long numerator;
     numerator = input.numerator;
-    long denominator;
+    long long denominator;
     denominator = input.denominator;
     if (input.denominator != 0) {
-        for (long base = input.maxValue(); base > 1; base--) {
+        for (long long base = input.maxValue(); base > 1; base--) {
             if ((numerator % base == 0) && (denominator % base == 0)) {
                 numerator = numerator / base;
                 denominator = denominator / base;
@@ -130,7 +130,7 @@ RationalExpression RationalExpression::simplify(RationalExpression input) {
     return {numerator, denominator};
 }
 
-long RationalExpression::maxValue() {
+long long RationalExpression::maxValue() {
     if (numerator > denominator) {
         return numerator;
     }
