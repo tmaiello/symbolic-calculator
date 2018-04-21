@@ -71,12 +71,6 @@ void ExpressionList::convertToPostfix() {
 
 	for (unsigned i = 0; i < tokenList.size(); i++)
 	{
-		cout << tokenList[i]->print() << " -> ";
-	}
-	cout << "END" << endl;
-
-	for (unsigned i = 0; i < tokenList.size(); i++)
-	{
 		// Check if number or operator
 		if (tokenList[i]->isNumber()) {
 			RationalExpression* number = (RationalExpression*)tokenList[i];
@@ -118,10 +112,6 @@ void ExpressionList::convertToPostfix() {
 		postfix.push_back(operators.top());
 		operators.pop();
 	}
-
-	for (unsigned i = 0; i < postfix.size(); i++)
-		cout << postfix[i]->print() << " >>> ";
-	cout << " END " << endl;
 }
 
 /* PUBLIC ACCESSOR METHODS */
