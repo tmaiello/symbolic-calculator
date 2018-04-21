@@ -1,4 +1,0 @@
-/private/var/folders/c6/bgz4_4xj07qgj8v5_q3shtc80000gn/T/AppTranslocation/00B7A97F-600D-40F8-98F1-056753392F60/d/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/ryansolomon/CLionProjects/symbolic-calculator23
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/ryansolomon/CLionProjects/symbolic-calculator23/cmake-build-debug
