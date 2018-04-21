@@ -45,27 +45,19 @@ void ExpressionList::processToTokens() {
 				end++;
 			}
 
+			// check for invalid period at end
+			if (cleaned[end - 1] == '.')
+				throw new invalid_argument("Period delimiter found at end of number");
+
 			// process the whole number
-			cout << " - Creating new number: " << cleaned.substr(i, end - i) << endl;
-			//RationalExpression* test = new RationalExpression(cleaned.substr(i, end - i));
 			tokenList.push_back(new RationalExpression(cleaned.substr(i, end - i)));
 			i = end - 1;
-			cout << " - i is now " << i << ", new start char is " << cleaned[i] << endl;
 		}
 		// process operators
 		else
-		{
-			cout << "Testing char: " << cleaned[i] << endl;
-
 			if (isValidChar(cleaned[i]))
-				cout << "Creating new operator: " << cleaned[i] << endl;
-			tokenList.push_back(new Operator(getOperatorToken(cleaned[i])));
-		}
+				tokenList.push_back(new Operator(getOperatorToken(cleaned[i])));
 	}
-
-	for (unsigned i = 0; i < tokenList.size(); i++)
-		cout << tokenList[i]->print() << " -> ";
-	cout << " END" << endl;
 }
 
 void ExpressionList::checkTokenSyntax() {
@@ -93,7 +85,7 @@ vector<Expression*> ExpressionList::getInPostfix() const {
 
 
 int main() {
-	string input = "12*13+14.5*20-16+57-6!";
+	string input = "12*13+145*20-16+57-6!";
 
 	ExpressionList* test = new ExpressionList(input);
 }
