@@ -19,6 +19,8 @@ public:
     static RationalExpression simplify(RationalExpression input);
     long long maxValue();
     std::string print() const override;
+	bool isNumber() const override;
+	bool isOperator() const override;
 };
 
 #endif //RATIONALEXPRESSION_RATIONALEXPRESSION_H

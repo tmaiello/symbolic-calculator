@@ -143,4 +143,10 @@ std::string RationalExpression::print() const {
     return std::to_string(numerator) + " / " + std::to_string(denominator);
 }
 
+bool RationalExpression::isNumber() const {
+	return true;
+}
 
+bool RationalExpression::isOperator() const {
+	return false;
+}
