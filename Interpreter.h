@@ -16,9 +16,8 @@ private:
     std::stack<RationalExpression*> expStack;
 
 public:
-    explicit Interpreter(std::vector<Expression *>&);
+    explicit Interpreter(std::vector<Expression*> input);
     void interpret();
-
 };
 
 #endif //SYMBOLIC_CALCULATOR_INTERPRETER_H

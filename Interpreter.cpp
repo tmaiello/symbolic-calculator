@@ -18,13 +18,12 @@ int main()
     return 0;
 }
 
-Interpreter::Interpreter(std::vector<Expression*>& pass)
+Interpreter::Interpreter(std::vector<Expression*> pass)
 {
-    std::vector<Expression*>* input = &pass;
-    std::stack<RationalExpression*> expStack;
+    input = pass;
     std::cout << "Start" << std::endl;
     interpret();
-    std::cout << expStack.top()->print() << std::endl;
+    //std::cout << expStack.top()->print() << std::endl;	// segfaults
 }
 
 void Interpreter::interpret()
