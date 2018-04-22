@@ -7,6 +7,7 @@
 
 int main()
 {
+	/*
     std::vector<Expression*> pass;
     pass.push_back(new RationalExpression("4"));
     pass.push_back(new RationalExpression("5"));
@@ -14,6 +15,11 @@ int main()
     pass.push_back(new Operator(OperatorToken::SUBTRACT));
     pass.push_back(new Operator(OperatorToken::ADD));
     Interpreter test = Interpreter(pass);
+	*/
+
+	string testInput = "(4 * (14/2) - 32/4) / 10 + 2";
+	ExpressionList* test = new ExpressionList(testInput);
+	Interpreter* testInt = new Interpreter(test->getInPostfix());
 
     return 0;
 }
@@ -71,5 +77,7 @@ void Interpreter::interpret()
     }
 
 	cout << "expStack size is: " << expStack.size() << endl;
-	cout << "THe answer youi fuckgin asked for is " << expStack.top()->print() << std::endl;
+	RationalExpression* answer = expStack.top();
+	answer = &RationalExpression::simplify(*answer);
+	cout << "Answer: " << answer->print() << std::endl;
 }
