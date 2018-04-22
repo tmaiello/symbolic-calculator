@@ -7,6 +7,7 @@
 Interpreter::Interpreter(std::vector<Expression*>& pass) {
     std::vector<Expression*>* input = &pass;
     std::stack<Expression*> expStack;
+    interpret();
 }
 
 void Interpreter::interpret() {
@@ -28,7 +29,7 @@ void Interpreter::interpret() {
                     expStack.push(&multiplied);
                 case OperatorToken::DIVIDE:
                     RationalExpression divided = RationalExpression::divide(exp1, exp2);
-                    expStack.push(&multiplied);
+                    expStack.push(&divided);
                 default:
                     break;
             }
