@@ -59,7 +59,7 @@ class Operator : public Expression
 	int getPrecedence() const;		// returns the precedence (lower is first) of this operator
 
 	// utility methods
-	string toString() const;		// return the char/string representation of this operator
+	string toString() const override;	// return the char/string representation of this operator
 	bool isNumber() const override;		// always returns false, as Operator is not of type RationalExpression
 	bool isOperator() const override;	// always returns true, as Operator is always of type Operator
 };
