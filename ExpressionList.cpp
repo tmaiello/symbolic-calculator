@@ -6,8 +6,11 @@
 #include "RationalExpression.h"
 #include <iostream>
 #include <stack>
+#include <math.h>
 
-#include "History.h"
+// Math constants
+const double PI = 3.14159;
+const double E = 2.71828;
 
 ExpressionList::ExpressionList(string input) : input(input)
 {
@@ -74,6 +77,13 @@ void ExpressionList::cleanInputString()
 		cleanedInput.replace(index, 3, "l");
 	}
 
+	// process pi
+	while (cleanedInput.find("pi") != string::npos)
+	{
+		int index = cleanedInput.find("pi");
+		cleanedInput.replace(index, 3, "p");
+	}
+
 	// remove invalid chars
 	for (unsigned i = 0; i < cleanedInput.length(); i++)
 		if (!ExpressionList::isValidChar(cleanedInput[i]) && cleanedInput[i] != '.')	// exception is made for '.' for decimals
@@ -113,7 +123,11 @@ void ExpressionList::processToTokens()
 		// process operators
 		else
 		{
-			if (isValidChar(cleanedInput[i]))
+			if (getOperatorToken(cleanedInput[i]) == OperatorToken::PI)
+				tokenList.push_back(new RationalExpression(PI));
+			else if (getOperatorToken(cleanedInput[i]) == OperatorToken::E)
+				tokenList.push_back(new RationalExpression(E));
+			else if (isValidChar(cleanedInput[i]))
 				tokenList.push_back(new Operator(getOperatorToken(cleanedInput[i])));
 		}
 	}

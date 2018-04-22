@@ -47,7 +47,8 @@ int Operator::getPrecedence() const
 
 	case OperatorToken::UNKNOWN:
 	default:
-		return -1;	// error output
+		// error output
+		return -1;
 		break;
 	}
 }
