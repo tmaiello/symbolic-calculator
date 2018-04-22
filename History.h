@@ -18,13 +18,12 @@ using namespace std;
 class History {
 
 private:
-    list<pair<ExpressionList, Interpreter>> listOfPairs;
+    list<pair<ExpressionList*, Interpreter*>> listOfPairs;
 
 public:
-    History();
-    pair<ExpressionList, Interpreter> createPair(ExpressionList *object1, Interpreter *object2);
-    void storePair(pair<ExpressionList, Interpreter> pair1);
-    list<pair<ExpressionList, Interpreter>> returnList();
+    pair<ExpressionList*, Interpreter*> createPair(ExpressionList *object1, Interpreter *object2);
+    void storePair(pair<ExpressionList*, Interpreter*> pair1);
+    list<pair<ExpressionList*, Interpreter*>> returnList();
     bool checkList();
 };
 

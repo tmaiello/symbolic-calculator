@@ -17,12 +17,14 @@
 
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
-    input = std::move(pass);
+	input = pass;
+	cout << "Constructed" << endl;
     interpret();
 }
 
 void Interpreter::interpret()
 {
+	cout << "I'm running whoop de doo" << endl;
     for (Expression* exp : input) {
         if (exp->isOperator()) {
             switch (dynamic_cast<Operator*>(exp)->getType())
@@ -85,8 +87,11 @@ void Interpreter::interpret()
             }
         }
         else {
+			cout << "PUSHED" << endl;
             expStack.push(dynamic_cast<RationalExpression*>(exp));
         }
+
+		cout << "STACK IS NOT EMPTY! " << expStack.size() << endl;
     }
 }
 
