@@ -3,4 +3,4 @@ project(symbolic-calculator)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(symbolic-calculator RationalExpression.cpp RationalExpression.h Expression.h ExpressionList.cpp ExpressionList.h Operator.cpp Operator.h History.cpp History.h)
+add_executable(symbolic-calculator RationalExpression.cpp RationalExpression.h Expression.h ExpressionList.cpp ExpressionList.h Operator.cpp Operator.h History.cpp History.h Interpreter.cpp Interpreter.h)
