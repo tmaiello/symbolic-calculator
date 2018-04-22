@@ -9,8 +9,8 @@
 #include <math.h>
 
 // Math constants
-const double PI = 3.14159;
-const double E = 2.71828;
+const string PI = "3.14159";
+const string E = "2.71828";
 
 ExpressionList::ExpressionList(string input) : input(input)
 {
@@ -174,6 +174,19 @@ void ExpressionList::checkTokenSyntax()
 				tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
 		}
 	}
+
+	// Look for double operators
+	for (unsigned i = 0; i < tokenList.size(); i++)
+	{
+		if (tokenList[i]->isOperator() && (i + 1) < tokenList.size() && tokenList[i + 1]->isOperator())
+		{
+			Operator* op1 = (Operator*)tokenList[i];
+			Operator* op2 = (Operator*)tokenList[i + 1];
+
+			if (op1->getType() == op2->getType())
+				tokenList.erase(tokenList.begin() + i);
+		}
+	}
 }
 
 void ExpressionList::convertToPostfix()
@@ -252,7 +265,7 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
-	string testInput = "5-6";
+	string testInput = "5-6++11";
 	ExpressionList* testExp = new ExpressionList(testInput);
 
 	/*
