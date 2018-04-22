@@ -6,25 +6,29 @@
 
 Operator::Operator(OperatorToken type) : type(type) {}
 
+OperatorToken Operator::getType() const {
+	return type;
+}
+
 // Returns the precedence (lower is first) of this operator
 int Operator::getPrecedence() const {
 	switch (type) {
-	case OperatorToken::L_PAREN:
-	case OperatorToken::R_PAREN:
-		return 0;
-		break;
-
 	case OperatorToken::FACTORIAL:
-		return 1;
+		return 0;
 		break;
 
 	case OperatorToken::MULTIPLY:
 	case OperatorToken::DIVIDE:
-		return 2;
+		return 1;
 		break;
 
 	case OperatorToken::ADD:
 	case OperatorToken::SUBTRACT:
+		return 2;
+		break;
+
+	case OperatorToken::L_PAREN:
+	case OperatorToken::R_PAREN:
 		return 3;
 		break;
 
