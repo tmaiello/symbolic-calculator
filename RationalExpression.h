@@ -1,9 +1,10 @@
-#ifndef RATIONALEXPRESSION_RATIONALEXPRESSION_H
-#define RATIONALEXPRESSION_RATIONALEXPRESSION_H
+#ifndef RATIONALEXPRESSION_H
+#define RATIONALEXPRESSION_H
 
 #include "Expression.h"
 
-class RationalExpression : public Expression {
+class RationalExpression : public Expression
+{
 private:
     long long numerator;
     long long denominator;
@@ -23,4 +24,4 @@ public:
 	bool isOperator() const override;
 };
 
-#endif //RATIONALEXPRESSION_RATIONALEXPRESSION_H
+#endif

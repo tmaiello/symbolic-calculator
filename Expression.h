@@ -8,7 +8,8 @@
 #include <string>
 using namespace std;
 
-class Expression {
+class Expression
+{
 	public:
 	virtual string print() const = 0;
 	virtual bool isNumber() const = 0;

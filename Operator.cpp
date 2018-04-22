@@ -6,13 +6,16 @@
 
 Operator::Operator(OperatorToken type) : type(type) {}
 
-OperatorToken Operator::getType() const {
+OperatorToken Operator::getType() const
+{
 	return type;
 }
 
 // Returns the precedence (lower is first) of this operator
-int Operator::getPrecedence() const {
-	switch (type) {
+int Operator::getPrecedence() const
+{
+	switch (type)
+	{
 	case OperatorToken::FACTORIAL:
 		return 0;
 		break;
@@ -39,20 +42,25 @@ int Operator::getPrecedence() const {
 	}
 }
 
-string Operator::print() const {
+string Operator::print() const
+{
 	return string(1, (char)type);
 }
 
-bool Operator::isNumber() const {
+bool Operator::isNumber() const
+{
 	return false;
 }
 
-bool Operator::isOperator() const {
+bool Operator::isOperator() const
+{
 	return true;
 }
 
-OperatorToken getOperatorToken(char raw) {
-	switch (raw) {
+OperatorToken getOperatorToken(char raw)
+{
+	switch (raw)
+	{
 	case '+':
 		return OperatorToken::ADD;
 		break;

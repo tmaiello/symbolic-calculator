@@ -2,8 +2,8 @@
 // Defines the History class which stores expression history.
 //
 
-#ifndef SYMBOLIC_CALCULATOR_HISTORY_H
-#define SYMBOLIC_CALCULATOR_HISTORY_H
+#ifndef HISTORY_H
+#define HISTORY_H
 
 #include <iostream>
 using namespace std;

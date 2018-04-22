@@ -18,7 +18,8 @@ using namespace std;
 /*	[ OperatorToken ]
 *	Lists all possible operator tokens.
 */
-enum class OperatorToken {
+enum class OperatorToken
+{
 	ADD = '+',
 	SUBTRACT = '-',
 	MULTIPLY = '*',
@@ -34,7 +35,8 @@ enum class OperatorToken {
 *	(Of type Expression so it can be stored in ExpressionList vectors)
 *	Stores an OperatorToken type, and contains functions to identify and manage operators as part of the string-to-token-list conversion process.
 */
-class Operator : public Expression {
+class Operator : public Expression
+{
 	private:
 	const OperatorToken type;		// stores the type of token this operator is
 

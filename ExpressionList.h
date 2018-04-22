@@ -15,7 +15,8 @@ using namespace std;
 *	- Converts that string into a list (stored as vector) of tokens
 *	- Resorts that list of tokens into postfix notation.
 */
-class ExpressionList {
+class ExpressionList
+{
 	private:
 	const string input;
 	vector<Expression*> tokenList;
