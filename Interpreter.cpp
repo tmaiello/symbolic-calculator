@@ -78,6 +78,6 @@ void Interpreter::interpret()
 
 	cout << "expStack size is: " << expStack.size() << endl;
 	RationalExpression* answer = expStack.top();
-	answer = &RationalExpression::simplify(*answer);
-	cout << "Answer: " << answer->print() << std::endl;
+	RationalExpression simplified = RationalExpression::simplify(*answer);
+	cout << "Answer: " << simplified.print() << std::endl;
 }
