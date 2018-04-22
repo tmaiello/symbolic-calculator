@@ -26,7 +26,7 @@ int Operator::getPrecedence() const
 {
 	switch (type)
 	{
-	case OperatorToken::FACTORIAL:
+	case OperatorToken::EXPONENT:
 		return 0;
 		break;
 
@@ -98,8 +98,8 @@ OperatorToken getOperatorToken(char raw)
 	case '/':
 		return OperatorToken::DIVIDE;
 		break;
-	case '!':
-		return OperatorToken::FACTORIAL;
+	case '^':
+		return OperatorToken::EXPONENT;
 		break;
 	// to ease parsing later, trig functions are reduced to single char representations
 	case 's':
@@ -117,6 +117,13 @@ OperatorToken getOperatorToken(char raw)
 		break;
 	case 'l':
 		return OperatorToken::LOG;
+		break;
+	// constants aren't really operators, but including them simplifies string cleaning for preparsing
+	case 'p':
+		return OperatorToken::PI;
+		break;
+	case 'e':
+		return OperatorToken::E;
 		break;
 	case '(':
 		return OperatorToken::L_PAREN;
