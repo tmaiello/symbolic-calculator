@@ -23,35 +23,38 @@ Interpreter::Interpreter(std::vector<Expression*> pass)
     input = pass;
     std::cout << "Start" << std::endl;
     interpret();
-    //std::cout << expStack.top()->print() << std::endl;	// segfaults
 }
 
 void Interpreter::interpret()
 {
     for (Expression* exp : input) {
         if (exp->isOperator()) {
-            auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
-            expStack.pop();
             auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
+            expStack.pop();
+            auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
             expStack.pop();
             switch (dynamic_cast<Operator*>(exp)->getType()) {
                 case OperatorToken::ADD: {
                     RationalExpression added = RationalExpression::add(*exp1, *exp2);
+					cout << "pushing: " << added.print() << endl;
                     expStack.push(&added);
                     break;
                 }
                 case OperatorToken::SUBTRACT: {
                     RationalExpression subtracted = RationalExpression::subtract(*exp1, *exp2);
+					cout << "pushing: " << subtracted.print() << endl;
                     expStack.push(&subtracted);
                     break;
                 }
                 case OperatorToken::MULTIPLY: {
                     RationalExpression multiplied = RationalExpression::multiply(*exp1, *exp2);
+					cout << "pushing: " << multiplied.print() << endl;
                     expStack.push(&multiplied);
                     break;
                 }
                 case OperatorToken::DIVIDE: {
                     RationalExpression divided = RationalExpression::divide(*exp1, *exp2);
+					cout << "pushing: " << divided.print() << endl;
                     expStack.push(&divided);
                     break;
                 }
@@ -66,4 +69,7 @@ void Interpreter::interpret()
             expStack.push(dynamic_cast<RationalExpression*>(exp));
         }
     }
+
+	cout << "expStack size is: " << expStack.size() << endl;
+	cout << "THe answer youi fuckgin asked for is " << expStack.top()->print() << std::endl;
 }
