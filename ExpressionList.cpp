@@ -34,7 +34,7 @@ void ExpressionList::cleanInputString()
 	// remove invalid chars
 	cleanedInput = input;
 	for (unsigned i = 0; i < cleanedInput.length(); i++)
-		if (!isNumber(cleanedInput[i]) || (!isValidChar(cleanedInput[i]) && cleanedInput[i] != '.'))	// exception is made for '.' for decimals
+		if (!isNumber(cleanedInput[i]) && (!isValidChar(cleanedInput[i]) && cleanedInput[i] != '.'))	// exception is made for '.' for decimals
 			cleanedInput = cleanedInput.substr(0, i) + cleanedInput.substr(i + 1);
 
 	while (cleanedInput.find("sin") != string::npos)
@@ -199,51 +199,8 @@ int main()
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
 	cout << "Result: " << rainbows->output() << endl;
 	testHistory->storePair(testHistory->createPair(unicorns, rainbows));
-	cout << "Empty? " << testHistory->returnList().empty() << endl;
 	string input = testHistory->returnList().front().first->getInput();
 	string storedResult = testHistory->returnList().front().second->output();
 	cout << "Stored input: " << input << endl;
 	cout << "Stored result: " << storedResult << endl;
-
-	/*
-	string input = "4 * sin(cos(tan(ln(log(sin(4*26)))))";
-	string cleanedInput = input;
-
-	// process trig functions
-	while (cleanedInput.find("sin") != string::npos)
-	{
-		int index = cleanedInput.find("sin");
-		cleanedInput.replace(index, 3, "s");
-	}
-	while (cleanedInput.find("cos") != string::npos)
-	{
-		int index = cleanedInput.find("cos");
-		cleanedInput.replace(index, 3, "c");
-	}
-	while (cleanedInput.find("tan") != string::npos)
-	{
-		int index = cleanedInput.find("tan");
-		cleanedInput.replace(index, 3, "t");
-	}
-
-	// process logs
-	while (cleanedInput.find("ln") != string::npos)
-	{
-		int index = cleanedInput.find("ln");
-		cleanedInput.replace(index, 2, "n");
-	}
-	while (cleanedInput.find("log") != string::npos)
-	{
-		int index = cleanedInput.find("log");
-		cleanedInput.replace(index, 3, "l");
-	}
-
-	// remove invalid chars
-	for (unsigned i = 0; i < cleanedInput.length(); i++)
-		if (!ExpressionList::isValidChar(cleanedInput[i]) && cleanedInput[i] != '.')	// exception is made for '.' for decimals
-			cleanedInput = cleanedInput.substr(0, i) + cleanedInput.substr(i + 1);
-	
-	cout << "Input: " << input << endl;
-	cout << "CleanedInput: " << cleanedInput << endl;
-	*/
 }
