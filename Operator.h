@@ -43,15 +43,21 @@ enum class OperatorToken
 class Operator : public Expression
 {
 	private:
+
+	// fields
 	const OperatorToken type;		// stores the type of OperatorToken this operator is
 
 	public:
 
+	// constructor
 	Operator(OperatorToken type);	// create a new operator with the provided OperatorToken type
+
+	// accessors
 	OperatorToken getType() const;	// return the OperatorToken type of this object
 	int getPrecedence() const;		// returns the precedence (lower is first) of this operator
-	string toString() const;		// return the char/string representation of this operator
 
+	// utility methods
+	string toString() const;		// return the char/string representation of this operator
 	bool isNumber() const override;		// always returns false, as Operator is not of type RationalExpression
 	bool isOperator() const override;	// always returns true, as Operator is always of type Operator
 };
