@@ -45,8 +45,8 @@ RationalExpression::RationalExpression(std::string value)
         auto pair = std::make_pair(stringValue , period);
         auto decimal = makeDecimalFraction(pair);
         auto finalAnswer = add(integer, decimal);
-        numerator = finalAnswer.numerator;
-        denominator = finalAnswer.denominator;
+        numerator = finalAnswer->numerator;
+        denominator = finalAnswer->denominator;
     }
 }
 
@@ -68,7 +68,7 @@ RationalExpression RationalExpression::makeDecimalFraction(std::pair<std::string
     return {afterDecimal, newDenominator};
 }
 
-RationalExpression RationalExpression::add(RationalExpression one, RationalExpression two) //one + two
+RationalExpression* RationalExpression::add(RationalExpression one, RationalExpression two) //one + two
 {
     long long newDenom;
     newDenom = one.denominator * two.denominator;
@@ -78,10 +78,11 @@ RationalExpression RationalExpression::add(RationalExpression one, RationalExpre
     twoNumerator = two.numerator * one.denominator;
     long long sumNumerator;
     sumNumerator = oneNumerator + twoNumerator;
-    return {sumNumerator, newDenom};
+    auto toReturn = new RationalExpression(sumNumerator, newDenom);
+    return toReturn;
 }
 
-RationalExpression RationalExpression::subtract(RationalExpression one, RationalExpression two) //one - two
+RationalExpression* RationalExpression::subtract(RationalExpression one, RationalExpression two) //one - two
 {
     long long newDenom;
     newDenom = one.denominator * two.denominator;
@@ -91,29 +92,32 @@ RationalExpression RationalExpression::subtract(RationalExpression one, Rational
     twoNumerator = two.numerator * one.denominator;
     long long sumNumerator;
     sumNumerator = oneNumerator - twoNumerator;
-    return {sumNumerator, newDenom};
+    auto toReturn = new RationalExpression(sumNumerator, newDenom);
+    return toReturn;
 }
 
-RationalExpression RationalExpression::multiply(RationalExpression one, RationalExpression two) //one * two
+RationalExpression* RationalExpression::multiply(RationalExpression one, RationalExpression two) //one * two
 {
     long long newDenom;
     newDenom = one.denominator * two.denominator;
     long long newNumerator;
     newNumerator = one.numerator * two.numerator;
-    return {newNumerator, newDenom};
+    auto toReturn = new RationalExpression(newNumerator, newDenom);
+    return toReturn;
 }
 
-RationalExpression RationalExpression::divide(RationalExpression one, RationalExpression two) //one / two
+RationalExpression* RationalExpression::divide(RationalExpression one, RationalExpression two) //one / two
 {
     long long newDenom;
     newDenom = one.denominator * two.numerator;
     long long newNumerator;
     newNumerator = one.numerator * two.denominator;
-    return {newNumerator, newDenom};
+    auto toReturn = new RationalExpression(newNumerator, newDenom);
+    return toReturn;
 }
 
 
-RationalExpression RationalExpression::simplify(RationalExpression input)
+RationalExpression* RationalExpression::simplify(RationalExpression input)
 {
     long long numerator;
     numerator = input.numerator;
@@ -130,7 +134,8 @@ RationalExpression RationalExpression::simplify(RationalExpression input)
             }
         }
     }
-    return {numerator, denominator};
+    auto toReturn = new RationalExpression(numerator, denominator);
+    return toReturn;
 }
 
 long long RationalExpression::maxValue()
@@ -145,7 +150,7 @@ long long RationalExpression::maxValue()
     }
 }
 
-std::string RationalExpression::print() const
+std::string RationalExpression::toString() const
 {
     return std::to_string(numerator) + " / " + std::to_string(denominator);
 }

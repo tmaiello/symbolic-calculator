@@ -42,7 +42,7 @@ int Operator::getPrecedence() const
 	}
 }
 
-string Operator::print() const
+string Operator::toString() const
 {
 	return string(1, (char)type);
 }

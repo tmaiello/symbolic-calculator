@@ -52,7 +52,7 @@ class Operator : public Expression
 	Operator(OperatorToken type);
 	OperatorToken getType() const;
 	int getPrecedence() const;		// returns the precedence (lower is first) of this operator
-	string print() const;
+	string toString() const;
 
 	bool isNumber() const override;
 	bool isOperator() const override;
