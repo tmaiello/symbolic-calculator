@@ -62,8 +62,48 @@ void ExpressionList::processToTokens() {
 	}
 }
 
-void ExpressionList::checkTokenSyntax() {
+void ExpressionList::checkTokenSyntax(vector<Expression>* tokens) {
+   /* iterator<Expression*> x;
+    int lbr=0;
+    int rbr=0;
+    for (x=tokens.begin(); x!=tokens.end() ; x++) {
+        if(x!=tokens.begin()){
 
+            if(x == previous && x="+" ){
+                throw new invalid_argument("Invalid Syntax :'++'");
+            }
+            if(x == previous && x="-"){
+                throw new invalid_argument("Invalid Syntax :'--'");
+            }
+            if(x == previous && x="/"){
+                throw new invalid_argument("Invalid Syntax :'//'");
+            }
+            if(x == previous && x="!"){
+                throw new invalid_argument("Invalid Syntax :'!!'");
+            }
+        }
+        if (x=="("){
+            lbr++;
+        }
+        if (x==")"){
+            rbr++;
+        }
+        if(x==")" && rbr>lbr){
+            throw new invalid_argument("Braces out of order");
+        }
+
+        char previous = x;
+    }
+    if(lbr!=rbr){
+        if (lbr<rbr) {
+            throw new invalid_argument("Missing a )");
+        }
+        else{
+            throw new invalid_argument("Missing a (");
+        }
+    }
+
+*/
 }
 
 void ExpressionList::convertToPostfix() {
