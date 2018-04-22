@@ -13,7 +13,7 @@
 class Interpreter {
 private:
     std::vector<Expression*> input;
-    std::stack<Expression*> expStack;
+    std::stack<RationalExpression*> expStack;
 
 public:
     explicit Interpreter(std::vector<Expression *>&);
