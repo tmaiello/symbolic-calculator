@@ -10,14 +10,13 @@ Interpreter::Interpreter(std::vector<Expression*>& pass) {
 }
 
 void Interpreter::interpret() {
-
     for (Expression* exp : input) {
         if (exp->isOperator()) {
             auto exp1 = dynamic_cast<RationalExpression&>(expStack.top());
             expStack.pop();
             auto exp2 = dynamic_cast<RationalExpression&>(expStack.top());
             expStack.pop();
-            switch (exp->getType()) {
+            switch (dynamic_cast<Operator*>(exp)->getType()) {
                 case OperatorToken::ADD:
                     RationalExpression added = RationalExpression::add(exp1, exp2);
                     expStack.push(&added);
@@ -33,7 +32,6 @@ void Interpreter::interpret() {
                 default:
                     break;
             }
-
         }
         else {
             expStack.push(exp);

@@ -29,7 +29,6 @@ class ExpressionList {
 
 	public:
 	ExpressionList(string input);
-
 	string getInput() const;
 	vector<Expression*> getTokenList() const;
 	vector<Expression*> getInPostfix() const;
