@@ -144,6 +144,11 @@ RationalExpression *RationalExpression::negate(RationalExpression input)
     return toReturn;
 }
 
+double RationalExpression::toDouble() const {
+    double simplify = static_cast<double>(numerator) / static_cast<double>(denominator);
+    return simplify;
+}
+
 long long RationalExpression::maxValue()
 {
     if (numerator > denominator)

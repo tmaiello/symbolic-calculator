@@ -38,6 +38,7 @@ class RationalExpression : public Expression
 	// utility methods
     static RationalExpression makeDecimalFraction(std::pair<std::string, long long> &value);
     std::string toString() const override;
+	double toDouble() const;
 };
 
 #endif

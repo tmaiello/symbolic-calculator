@@ -1,5 +1,8 @@
 #include <iostream>
+#include <cmath>
 #include <vector>
+#include <sstream>
+#include <iomanip>
 #include "Interpreter.h"
 #include "ExpressionList.h"
 #include "RationalExpression.h"
@@ -14,6 +17,7 @@
 
     return 0;
 }*/
+
 
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
@@ -37,9 +41,9 @@ void Interpreter::interpret()
                 }
                 case OperatorToken::ADD:
                 {
-                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
-                    expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     auto added = RationalExpression::add(*exp1, *exp2);
                     expStack.push(added);
@@ -47,19 +51,19 @@ void Interpreter::interpret()
                 }
                 case OperatorToken::SUBTRACT:
                 {
-                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
-                    expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
-                    auto subtracted = RationalExpression::subtract(*exp1, *exp2);
+                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    auto subtracted = RationalExpression::subtract(*exp2, *exp1);
                     expStack.push(subtracted);
                     break;
                 }
                 case OperatorToken::MULTIPLY:
                 {
-                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
-                    expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     auto multiplied = RationalExpression::multiply(*exp1, *exp2);
                     expStack.push(multiplied);
@@ -67,15 +71,62 @@ void Interpreter::interpret()
                 }
                 case OperatorToken::DIVIDE:
                 {
-                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
-                    expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
-                    auto divided = RationalExpression::divide(*exp1, *exp2);
+                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    auto divided = RationalExpression::divide(*exp2, *exp1);
                     expStack.push(divided);
                     break;
                 }
-                case OperatorToken::FACTORIAL:
+                case OperatorToken::SIN:
+                {
+                    auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    double simplify = exp1->toDouble();
+                    double sinVal = std::sin(simplify);
+                    std::stringstream stream;
+                    stream << fixed << std::setprecision(6) << sinVal;
+                    std::string toString = stream.str();
+                    auto sinDone = new RationalExpression(toString);
+                    expStack.push(sinDone);
+                    break;
+                }
+                case OperatorToken::COS:
+                {
+                    auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    double simplify = exp1->toDouble();
+                    double cosVal = std::cos(simplify);
+                    std::stringstream stream;
+                    stream << fixed << std::setprecision(6) << cosVal;
+                    std::string toString = stream.str();
+                    auto cosDone = new RationalExpression(toString);
+                    expStack.push(cosDone);
+                    break;
+                }
+                case OperatorToken::TAN:
+                {
+                    auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    double simplify = exp1->toDouble();
+                    double tanVal = std::cos(simplify);
+                    std::stringstream stream;
+                    stream << fixed << std::setprecision(6) << tanVal;
+                    std::string toString = stream.str();
+                    auto tanDone = new RationalExpression(toString);
+                    expStack.push(tanDone);
+                    break;
+                }
+                case OperatorToken::LN:
+                {
+                    break;
+                }
+                case OperatorToken::LOG:
+                {
+                    break;
+                }
+                case OperatorToken::EXPONENT:
                 {
                     break;
                 }
