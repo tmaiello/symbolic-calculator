@@ -10,20 +10,22 @@ using namespace std;
 #include <list>
 #include "RationalExpression.h"
 #include "ExpressionList.h"
+#include "Interpreter.h"
+
 
 
 
 class History {
 
 private:
-    list<pair<ExpressionList, RationalExpression>> listOfPairs;
+    list<pair<ExpressionList, Interpreter>> listOfPairs;
 
 public:
     History();
-    pair<ExpressionList, RationalExpression> createPair(ExpressionList *object1, RationalExpression *object2);
-    void storePair(pair<ExpressionList, RationalExpression> pair1);
-    pair<ExpressionList, RationalExpression> iterator(int index);
-    list<pair<ExpressionList, RationalExpression>> returnList();
+    pair<ExpressionList, Interpreter> createPair(ExpressionList *object1, Interpreter *object2);
+    void storePair(pair<ExpressionList, Interpreter> pair1);
+    list<pair<ExpressionList, Interpreter>> returnList();
+    bool checkList();
 };
 
 
