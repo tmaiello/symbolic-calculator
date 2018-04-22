@@ -5,12 +5,9 @@
 #include "ExpressionList.h"
 #include "RationalExpression.h"
 #include <iostream>
-#include <stack>
 
 ExpressionList::ExpressionList(string input) : input(input) {
 	processToTokens();
-	checkTokenSyntax();
-	convertToPostfix();
 }
 
 /* PRIVATE HELPER METHODS */
@@ -32,6 +29,7 @@ void ExpressionList::processToTokens() {
 
 	// start processing
 	for (unsigned i = 0; i < cleaned.length(); i++) {
+		cout << "i is " << i << endl;
 		// process numbers
 		if (isNumber(cleaned[i])) {
 			// count until end of number
@@ -47,71 +45,75 @@ void ExpressionList::processToTokens() {
 				end++;
 			}
 
-			// check for invalid period at end
-			if (cleaned[end - 1] == '.')
-				throw new invalid_argument("Period delimiter found at end of number");
-
 			// process the whole number
-			tokenList.push_back(new RationalExpression(cleaned.substr(i, end - i)));
+			cout << " - Creating new number: " << cleaned.substr(i, end - i) << endl;
+			//RationalExpression* test = new RationalExpression(cleaned.substr(i, end - i));
+			//tokenList.push_back(new RationalExpression(cleaned.substr(i, end - i)));
 			i = end - 1;
+			cout << " - i is now " << i << ", new start char is " << cleaned[i] << endl;
 		}
 		// process operators
 		else
+		{
+			cout << "Testing char: " << cleaned[i] << endl;
+
 			if (isValidChar(cleaned[i]))
-				tokenList.push_back(new Operator(getOperatorToken(cleaned[i])));
+				cout << "Creating new operator: " << cleaned[i] << endl;
+			//tokenList.push_back(new Operator(getOperatorToken(cleaned[i])));
+		}
 	}
+
+	for (unsigned i = 0; i < tokenList.size(); i++)
+		cout << tokenList[i]->print() << " -> ";
+	cout << " END" << endl;
 }
 
-void ExpressionList::checkTokenSyntax() {
+void ExpressionList::checkTokenSyntax(vector<Expression* tokens>) {
+	iterator<Expression*> x;
+	int lbr=0;
+	int rbr=0;
+	for (x=token.begin(); x!=tokens.end() ; x++) {
+		if(x!=tokens.begin()){
+
+			if(x == previous && x="+" ){
+				throw new invalid_argument("Invalid Syntax :'++'");
+			}
+			if(x == previous && x="-"){
+				throw new invalid_argument("Invalid Syntax :'--'");
+			}
+			if(x == previous && x="/"){
+				throw new invalid_argument("Invalid Syntax :'//'");
+			}
+			if(x == previous && x="!"){
+				throw new invalid_argument("Invalid Syntax :'!!'");
+			}
+		}
+		if (x=="("){
+			lbr++;
+		}
+		if (x==")"){
+			rbr++;
+		}
+        if(x==")" && rbr>lbr){
+            throw new invalid_argument("Braces out of order");
+        }
+
+		char previous = x;
+	}
+    if(lbr!=rbr){
+        if (lbr<rbr) {
+            throw new invalid_argument("Missing a )");
+        }
+        else{
+            throw new invalid_argument("Missing a (");
+        }
+    }
+
 
 }
 
 void ExpressionList::convertToPostfix() {
-	stack<Operator*> operators;
 
-	for (unsigned i = 0; i < tokenList.size(); i++)
-	{
-		// Check if number or operator
-		if (tokenList[i]->isNumber()) {
-			RationalExpression* number = (RationalExpression*)tokenList[i];
-
-			postfix.push_back(number);
-		}
-
-		if (tokenList[i]->isOperator()) {
-			Operator* op = (Operator*)tokenList[i];
-
-			// Handle normal operators
-			if (op->getType() != OperatorToken::L_PAREN && op->getType() != OperatorToken::R_PAREN) {
-				while (operators.size() > 0 && operators.top()->getPrecedence() < op->getPrecedence()) {
-					postfix.push_back(operators.top());
-					operators.pop();
-				}
-
-				operators.push(op);
-			}
-
-			// Handle parentheses
-			else if (op->getType() == OperatorToken::L_PAREN) {
-				operators.push(op);
-			}
-
-			else if (op->getType() == OperatorToken::R_PAREN) {
-				while (operators.top()->getType() != OperatorToken::L_PAREN) {
-					postfix.push_back(operators.top());
-					operators.pop();
-				}
-				
-				operators.pop();	// get rid of remaining left parenthesis
-			}
-		}
-	}
-
-	// pop remaining operators
-	while (operators.size() > 0) {
-		postfix.push_back(operators.top());
-		operators.pop();
-	}
 }
 
 /* PUBLIC ACCESSOR METHODS */
@@ -126,4 +128,12 @@ vector<Expression*> ExpressionList::getTokenList() const {
 
 vector<Expression*> ExpressionList::getInPostfix() const {
 	return postfix;
+}
+
+
+
+int main() {
+	string input = "12*13+14.5*20-16+57-6!";
+
+	ExpressionList* test = new ExpressionList(input);
 }
