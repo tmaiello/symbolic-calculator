@@ -25,8 +25,10 @@ Interpreter::Interpreter(std::vector<Expression*> pass)
 void Interpreter::interpret()
 {
     cout << "I'm running whoop de doo" << endl;
-    for (Expression* exp : input) {
-        if (exp->isOperator()) {
+    for (Expression* exp : input)
+    {
+        if (exp->isOperator())
+        {
             switch (dynamic_cast<Operator*>(exp)->getType())
             {
                 case OperatorToken::UNKNOWN:
@@ -93,7 +95,8 @@ void Interpreter::interpret()
     }
 }
 
-std::string Interpreter::output() {
+std::string Interpreter::output()
+{
     RationalExpression* answer = expStack.top();
     RationalExpression* simplified = RationalExpression::simplify(*answer);
     return simplified->toString();
