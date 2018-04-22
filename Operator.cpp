@@ -4,14 +4,24 @@
 
 #include "Operator.h"
 
-Operator::Operator(OperatorToken type) : type(type) {}
+/*
+*	Create a new operator with the provided OperatorToken type.
+*/
+Operator::Operator(OperatorToken type) : type(type)
+{
+}
 
+/*
+*	Return the OperatorToken type of this object.
+*/
 OperatorToken Operator::getType() const
 {
 	return type;
 }
 
-// Returns the precedence (lower is first) of this operator
+/*
+*	Return the precedence (lower is first) of this Operator object.
+*/
 int Operator::getPrecedence() const
 {
 	switch (type)
@@ -42,21 +52,36 @@ int Operator::getPrecedence() const
 	}
 }
 
+/*
+*	Return the char/string representation of this operator.
+*/
 string Operator::toString() const
 {
 	return string(1, (char)type);
 }
 
+/*
+*	Always returns false, as Operator is not of type RationalExpression.
+*/
 bool Operator::isNumber() const
 {
 	return false;
 }
 
+/*
+*	Always returns true, as Operator is always of type Operator.
+*/
 bool Operator::isOperator() const
 {
 	return true;
 }
 
+/*
+*	Get the OperatorToken type associated with this char.
+*	For example, '+' returns OperatorToken::ADD, and 's' returns OperatorToken::SIN.
+*	Also returns OperatorToken::UNKOWN if the char is not associated with a valid operator.
+*	Used to quickly and easily parse the raw input string into Operator tokens wherever they show up.
+*/
 OperatorToken getOperatorToken(char raw)
 {
 	switch (raw)
@@ -76,6 +101,7 @@ OperatorToken getOperatorToken(char raw)
 	case '!':
 		return OperatorToken::FACTORIAL;
 		break;
+	// to ease parsing later, trig functions are reduced to single char representations
 	case 's':
 		return OperatorToken::SIN;
 		break;
@@ -85,6 +111,7 @@ OperatorToken getOperatorToken(char raw)
 	case 't':
 		return OperatorToken::TAN;
 		break;
+	// same thing with logs
 	case 'n':
 		return OperatorToken::LN;
 		break;
@@ -98,7 +125,8 @@ OperatorToken getOperatorToken(char raw)
 		return OperatorToken::R_PAREN;
 		break;
 	default:
-		return OperatorToken::UNKNOWN;	// error output
+		// error output
+		return OperatorToken::UNKNOWN;
 		break;
 	}
 }

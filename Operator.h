@@ -43,22 +43,26 @@ enum class OperatorToken
 class Operator : public Expression
 {
 	private:
-	const OperatorToken type;		// stores the type of token this operator is
+	const OperatorToken type;		// stores the type of OperatorToken this operator is
 
 	public:
-	const int LEFT_ASSOC = 0;
-	const int RIGHT_ASSOC = 1;
 
-	Operator(OperatorToken type);
-	OperatorToken getType() const;
+	Operator(OperatorToken type);	// create a new operator with the provided OperatorToken type
+	OperatorToken getType() const;	// return the OperatorToken type of this object
 	int getPrecedence() const;		// returns the precedence (lower is first) of this operator
-	string toString() const;
+	string toString() const;		// return the char/string representation of this operator
 
-	bool isNumber() const override;
-	bool isOperator() const override;
+	bool isNumber() const override;		// always returns false, as Operator is not of type RationalExpression
+	bool isOperator() const override;	// always returns true, as Operator is always of type Operator
 };
 
-// Helper method
+/*
+*	[ getOperatorToken ]
+*	Get the OperatorToken type associated with this char.
+*	For example, '+' returns OperatorToken::ADD, and 's' returns OperatorToken::SIN.
+*	Also returns OperatorToken::UNKOWN if the char is not associated with a valid operator.
+*	Used to quickly and easily parse the raw input string into Operator tokens wherever they show up.
+*/
 OperatorToken getOperatorToken(char raw);
 
 #endif
