@@ -7,7 +7,8 @@
 #include <iostream>
 #include <stack>
 
-ExpressionList::ExpressionList(string input) : input(input) {
+ExpressionList::ExpressionList(string input) : input(input)
+{
 	processToTokens();
 	checkTokenSyntax();
 	convertToPostfix();
@@ -15,15 +16,18 @@ ExpressionList::ExpressionList(string input) : input(input) {
 
 /* PRIVATE HELPER METHODS */
 
-bool ExpressionList::isNumber(char toTest) {
+bool ExpressionList::isNumber(char toTest)
+{
 	return (toTest >= (int)'0' && toTest <= (int)'9');
 }
 
-bool ExpressionList::isValidChar(char toTest) {
+bool ExpressionList::isValidChar(char toTest)
+{
 	return (isNumber(toTest) || (getOperatorToken(toTest) != OperatorToken::UNKNOWN));
 }
 
-void ExpressionList::processToTokens() {
+void ExpressionList::processToTokens()
+{
 	// remove invalid chars
 	string cleaned = input;
 	for (unsigned i = 0; i < cleaned.length(); i++)
@@ -31,13 +35,16 @@ void ExpressionList::processToTokens() {
 			cleaned = cleaned.substr(0, i) + cleaned.substr(i + 1);
 
 	// start processing
-	for (unsigned i = 0; i < cleaned.length(); i++) {
+	for (unsigned i = 0; i < cleaned.length(); i++)
+	{
 		// process numbers
-		if (isNumber(cleaned[i])) {
+		if (isNumber(cleaned[i]))
+		{
 			// count until end of number
 			int end = i;
 			int periodFound = false;
-			while (end != cleaned.length() && (isNumber(cleaned[end]) || cleaned[end] == '.')) {	// designed to short circuit when out of bounds
+			while (end != cleaned.length() && (isNumber(cleaned[end]) || cleaned[end] == '.'))	// designed to short circuit when out of bounds
+			{
 				if (cleaned[i] == '.')
 					if (periodFound)
 						throw new invalid_argument("More than one period delimiter found in a number");
@@ -62,68 +69,40 @@ void ExpressionList::processToTokens() {
 	}
 }
 
-void ExpressionList::checkTokenSyntax(vector<Expression>* tokens) {
-   /* iterator<Expression*> x;
-    int lbr=0;
-    int rbr=0;
-    for (x=tokens.begin(); x!=tokens.end() ; x++) {
-        if(x!=tokens.begin()){
+void ExpressionList::checkTokenSyntax()
+{
+	// Count parentheses
+	int parenthesesCount = 0;
 
-            if(x == previous && x="+" ){
-                throw new invalid_argument("Invalid Syntax :'++'");
-            }
-            if(x == previous && x="-"){
-                throw new invalid_argument("Invalid Syntax :'--'");
-            }
-            if(x == previous && x="/"){
-                throw new invalid_argument("Invalid Syntax :'//'");
-            }
-            if(x == previous && x="!"){
-                throw new invalid_argument("Invalid Syntax :'!!'");
-            }
-        }
-        if (x=="("){
-            lbr++;
-        }
-        if (x==")"){
-            rbr++;
-        }
-        if(x==")" && rbr>lbr){
-            throw new invalid_argument("Braces out of order");
-        }
+	for (unsigned i = 0; i < tokenList.size(); i++)
+	{
 
-        char previous = x;
-    }
-    if(lbr!=rbr){
-        if (lbr<rbr) {
-            throw new invalid_argument("Missing a )");
-        }
-        else{
-            throw new invalid_argument("Missing a (");
-        }
-    }
-
-*/
+	}
 }
 
-void ExpressionList::convertToPostfix() {
+void ExpressionList::convertToPostfix()
+{
 	stack<Operator*> operators;
 
 	for (unsigned i = 0; i < tokenList.size(); i++)
 	{
 		// Check if number or operator
-		if (tokenList[i]->isNumber()) {
+		if (tokenList[i]->isNumber())
+		{
 			RationalExpression* number = (RationalExpression*)tokenList[i];
 
 			postfix.push_back(number);
 		}
 
-		if (tokenList[i]->isOperator()) {
+		if (tokenList[i]->isOperator())
+		{
 			Operator* op = (Operator*)tokenList[i];
 
 			// Handle normal operators
-			if (op->getType() != OperatorToken::L_PAREN && op->getType() != OperatorToken::R_PAREN) {
-				while (operators.size() > 0 && operators.top()->getPrecedence() < op->getPrecedence()) {
+			if (op->getType() != OperatorToken::L_PAREN && op->getType() != OperatorToken::R_PAREN)
+			{
+				while (operators.size() > 0 && operators.top()->getPrecedence() < op->getPrecedence())
+				{
 					postfix.push_back(operators.top());
 					operators.pop();
 				}
@@ -132,12 +111,15 @@ void ExpressionList::convertToPostfix() {
 			}
 
 			// Handle parentheses
-			else if (op->getType() == OperatorToken::L_PAREN) {
+			else if (op->getType() == OperatorToken::L_PAREN)
+			{
 				operators.push(op);
 			}
 
-			else if (op->getType() == OperatorToken::R_PAREN) {
-				while (operators.top()->getType() != OperatorToken::L_PAREN) {
+			else if (op->getType() == OperatorToken::R_PAREN) 
+			{
+				while (operators.top()->getType() != OperatorToken::L_PAREN)
+				{
 					postfix.push_back(operators.top());
 					operators.pop();
 				}
@@ -148,7 +130,8 @@ void ExpressionList::convertToPostfix() {
 	}
 
 	// pop remaining operators
-	while (operators.size() > 0) {
+	while (operators.size() > 0)
+	{
 		postfix.push_back(operators.top());
 		operators.pop();
 	}
@@ -156,14 +139,17 @@ void ExpressionList::convertToPostfix() {
 
 /* PUBLIC ACCESSOR METHODS */
 
-string ExpressionList::getInput() const {
+string ExpressionList::getInput() const
+{
 	return input;
 }
 
-vector<Expression*> ExpressionList::getTokenList() const {
+vector<Expression*> ExpressionList::getTokenList() const
+{
 	return tokenList;
 }
 
-vector<Expression*> ExpressionList::getInPostfix() const {
+vector<Expression*> ExpressionList::getInPostfix() const
+{
 	return postfix;
 }
