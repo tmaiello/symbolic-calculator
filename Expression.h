@@ -11,7 +11,7 @@ using namespace std;
 class Expression
 {
 	public:
-	virtual string print() const = 0;
+	virtual string toString() const = 0;
 	virtual bool isNumber() const = 0;
 	virtual bool isOperator() const = 0;
 };
