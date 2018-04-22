@@ -217,7 +217,7 @@ vector<Expression*> ExpressionList::getInPostfix() const
 int main()
 {
 	History* testHistory = new History();
-	ExpressionList* unicorns = new ExpressionList("7*6");
+	ExpressionList* unicorns = new ExpressionList("(4 * (14/2) - 32/4) / 10 + 2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
 	cout << "Result: " << rainbows->output() << endl;
 	testHistory->storePair(testHistory->createPair(unicorns, rainbows));

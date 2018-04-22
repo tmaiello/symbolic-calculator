@@ -17,14 +17,14 @@
 
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
-	input = pass;
-	cout << "Constructed" << endl;
+    input = pass;
+    cout << "Constructed" << endl;
     interpret();
 }
 
 void Interpreter::interpret()
 {
-	cout << "I'm running whoop de doo" << endl;
+    cout << "I'm running whoop de doo" << endl;
     for (Expression* exp : input) {
         if (exp->isOperator()) {
             switch (dynamic_cast<Operator*>(exp)->getType())
@@ -39,8 +39,8 @@ void Interpreter::interpret()
                     expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
-                    RationalExpression added = RationalExpression::add(*exp1, *exp2);
-                    expStack.push(&added);
+                    auto added = RationalExpression::add(*exp1, *exp2);
+                    expStack.push(added);
                     break;
                 }
                 case OperatorToken::SUBTRACT:
@@ -49,8 +49,8 @@ void Interpreter::interpret()
                     expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
-                    RationalExpression subtracted = RationalExpression::subtract(*exp1, *exp2);
-                    expStack.push(&subtracted);
+                    auto subtracted = RationalExpression::subtract(*exp1, *exp2);
+                    expStack.push(subtracted);
                     break;
                 }
                 case OperatorToken::MULTIPLY:
@@ -59,8 +59,8 @@ void Interpreter::interpret()
                     expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
-                    RationalExpression multiplied = RationalExpression::multiply(*exp1, *exp2);
-                    expStack.push(&multiplied);
+                    auto multiplied = RationalExpression::multiply(*exp1, *exp2);
+                    expStack.push(multiplied);
                     break;
                 }
                 case OperatorToken::DIVIDE:
@@ -69,8 +69,8 @@ void Interpreter::interpret()
                     expStack.pop();
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
-                    RationalExpression divided = RationalExpression::divide(*exp1, *exp2);
-                    expStack.push(&divided);
+                    auto divided = RationalExpression::divide(*exp1, *exp2);
+                    expStack.push(divided);
                     break;
                 }
                 case OperatorToken::FACTORIAL:
@@ -86,17 +86,15 @@ void Interpreter::interpret()
                 }
             }
         }
-        else {
-			cout << "PUSHED" << endl;
+        else
+        {
             expStack.push(dynamic_cast<RationalExpression*>(exp));
         }
-
-		cout << "STACK IS NOT EMPTY! " << expStack.size() << endl;
     }
 }
 
 std::string Interpreter::output() {
     RationalExpression* answer = expStack.top();
-    RationalExpression simplified = RationalExpression::simplify(*answer);
-    return simplified.print();
+    RationalExpression* simplified = RationalExpression::simplify(*answer);
+    return simplified->toString();
 }
