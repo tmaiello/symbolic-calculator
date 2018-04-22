@@ -18,6 +18,7 @@ private:
 public:
     explicit Interpreter(std::vector<Expression*> input);
     void interpret();
+    std::string output();
 };
 
 #endif //SYMBOLIC_CALCULATOR_INTERPRETER_H

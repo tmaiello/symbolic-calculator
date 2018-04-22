@@ -20,6 +20,7 @@ int main()
 	string testInput = "(4 * (14/2) - 32/4) / 10 + 2";
 	ExpressionList* test = new ExpressionList(testInput);
 	Interpreter* testInt = new Interpreter(test->getInPostfix());
+    std::cout << testInt->output() << std::endl;
 
     return 0;
 }
@@ -27,7 +28,7 @@ int main()
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
     input = pass;
-    std::cout << "Start" << std::endl;
+    //std::cout << "Start" << std::endl;
     interpret();
 }
 
@@ -42,25 +43,25 @@ void Interpreter::interpret()
             switch (dynamic_cast<Operator*>(exp)->getType()) {
                 case OperatorToken::ADD: {
                     RationalExpression added = RationalExpression::add(*exp1, *exp2);
-					cout << "pushing: " << added.print() << endl;
+					//cout << "pushing: " << added.print() << endl;
                     expStack.push(&added);
                     break;
                 }
                 case OperatorToken::SUBTRACT: {
                     RationalExpression subtracted = RationalExpression::subtract(*exp1, *exp2);
-					cout << "pushing: " << subtracted.print() << endl;
+					//cout << "pushing: " << subtracted.print() << endl;
                     expStack.push(&subtracted);
                     break;
                 }
                 case OperatorToken::MULTIPLY: {
                     RationalExpression multiplied = RationalExpression::multiply(*exp1, *exp2);
-					cout << "pushing: " << multiplied.print() << endl;
+					//cout << "pushing: " << multiplied.print() << endl;
                     expStack.push(&multiplied);
                     break;
                 }
                 case OperatorToken::DIVIDE: {
                     RationalExpression divided = RationalExpression::divide(*exp1, *exp2);
-					cout << "pushing: " << divided.print() << endl;
+					//cout << "pushing: " << divided.print() << endl;
                     expStack.push(&divided);
                     break;
                 }
@@ -76,8 +77,14 @@ void Interpreter::interpret()
         }
     }
 
-	cout << "expStack size is: " << expStack.size() << endl;
+	/*cout << "expStack size is: " << expStack.size() << endl;
 	RationalExpression* answer = expStack.top();
 	RationalExpression simplified = RationalExpression::simplify(*answer);
-	cout << "Answer: " << simplified.print() << std::endl;
+	cout << "Answer: " << simplified.print() << std::endl;*/
+}
+
+std::string Interpreter::output() {
+    RationalExpression* answer = expStack.top();
+    RationalExpression simplified = RationalExpression::simplify(*answer);
+    return simplified.print();
 }
