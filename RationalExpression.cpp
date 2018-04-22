@@ -116,7 +116,6 @@ RationalExpression* RationalExpression::divide(RationalExpression one, RationalE
     return toReturn;
 }
 
-
 RationalExpression* RationalExpression::simplify(RationalExpression input)
 {
     long long numerator;
@@ -135,6 +134,13 @@ RationalExpression* RationalExpression::simplify(RationalExpression input)
         }
     }
     auto toReturn = new RationalExpression(numerator, denominator);
+    return toReturn;
+}
+
+RationalExpression *RationalExpression::negate(RationalExpression input)
+{
+    long long negateNum = -(input.numerator);
+    auto toReturn = new RationalExpression(negateNum, input.denominator);
     return toReturn;
 }
 

@@ -18,6 +18,7 @@ public:
     static RationalExpression* multiply(RationalExpression one, RationalExpression two);
     static RationalExpression* divide(RationalExpression one, RationalExpression two);
     static RationalExpression* simplify(RationalExpression input);
+	static RationalExpression* negate(RationalExpression input);
     long long maxValue();
     std::string toString() const override;
 	bool isNumber() const override;
