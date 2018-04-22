@@ -7,8 +7,11 @@
 #include <iostream>
 #include <stack>
 
+#include "History.h"
+
 ExpressionList::ExpressionList(string input) : input(input)
 {
+	cleanInputString();
 	processToTokens();
 	checkTokenSyntax();
 	convertToPostfix();
@@ -29,9 +32,9 @@ bool ExpressionList::isValidChar(char toTest)
 void ExpressionList::cleanInputString()
 {
 	// remove invalid chars
-	string cleanedInput = input;
+	cleanedInput = input;
 	for (unsigned i = 0; i < cleanedInput.length(); i++)
-		if (!isValidChar(cleanedInput[i]) && cleanedInput[i] != '.')	// exception is made for '.' for decimals
+		if (!isNumber(cleanedInput[i]) || (!isValidChar(cleanedInput[i]) && cleanedInput[i] != '.'))	// exception is made for '.' for decimals
 			cleanedInput = cleanedInput.substr(0, i) + cleanedInput.substr(i + 1);
 
 	while (cleanedInput.find("sin") != string::npos)
@@ -39,6 +42,8 @@ void ExpressionList::cleanInputString()
 		int index = cleanedInput.find("sin");
 		cleanedInput.replace(index, 4, "s");
 	}
+
+	cout << "cleaned: " << cleanedInput << endl;
 }
 
 void ExpressionList::processToTokens()
@@ -189,6 +194,18 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
+	History* testHistory = new History();
+	ExpressionList* unicorns = new ExpressionList("7*6");
+	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
+	cout << "Result: " << rainbows->output() << endl;
+	testHistory->storePair(testHistory->createPair(unicorns, rainbows));
+	cout << "Empty? " << testHistory->returnList().empty() << endl;
+	string input = testHistory->returnList().front().first->getInput();
+	string storedResult = testHistory->returnList().front().second->output();
+	cout << "Stored input: " << input << endl;
+	cout << "Stored result: " << storedResult << endl;
+
+	/*
 	string input = "4 * sin(cos(tan(ln(log(sin(4*26)))))";
 	string cleanedInput = input;
 
@@ -228,4 +245,5 @@ int main()
 	
 	cout << "Input: " << input << endl;
 	cout << "CleanedInput: " << cleanedInput << endl;
+	*/
 }
