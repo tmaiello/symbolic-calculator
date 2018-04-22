@@ -13,7 +13,19 @@ ExpressionList::ExpressionList(string input) : input(input)
 {
 	cleanInputString();
 	processToTokens();
+
+	cout << "BEFORE CLEAN" << endl;
+	for (unsigned i = 0; i < tokenList.size(); i++)
+		cout << tokenList[i]->toString() << " -> ";
+	cout << "END" << endl;
+
 	checkTokenSyntax();
+
+	cout << "AFTER CLEAN" << endl;
+	for (unsigned i = 0; i < tokenList.size(); i++)
+		cout << tokenList[i]->toString() << " -> ";
+	cout << "END" << endl;
+
 	convertToPostfix();
 }
 
@@ -100,8 +112,10 @@ void ExpressionList::processToTokens()
 		}
 		// process operators
 		else
+		{
 			if (isValidChar(cleanedInput[i]))
 				tokenList.push_back(new Operator(getOperatorToken(cleanedInput[i])));
+		}
 	}
 }
 
@@ -135,8 +149,15 @@ void ExpressionList::checkTokenSyntax()
 			Operator* op = (Operator*)tokenList[i];
 			RationalExpression* num = (RationalExpression*)tokenList[i + 1];
 
-			//if (op->getType() == OperatorToken::SUBTRACT)
+			if (op->getType() == OperatorToken::SUBTRACT)
+			{
+				tokenList[i + 1] = RationalExpression::negate(*num);
+				tokenList.erase(tokenList.begin() + i);
+			}
 
+			// make sure addition precedes the new negated number
+			if (i > 0 && tokenList[i - 1]->isNumber())
+				tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
 		}
 	}
 }
@@ -217,6 +238,10 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
+	string testInput = "5-6";
+	ExpressionList* testExp = new ExpressionList(testInput);
+
+	/*
 	History* testHistory = new History();
 	ExpressionList* unicorns = new ExpressionList("(4 * (14/2) - 32/4) / 10 + 2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
@@ -277,4 +302,4 @@ int main()
 	cout << "Input: " << input << endl;
 	cout << "CleanedInput: " << cleanedInput << endl;
 	*/
-[}
+}

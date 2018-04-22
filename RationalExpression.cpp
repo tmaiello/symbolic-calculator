@@ -158,7 +158,10 @@ long long RationalExpression::maxValue()
 
 std::string RationalExpression::toString() const
 {
-    return std::to_string(numerator) + " / " + std::to_string(denominator);
+	if (denominator != 1)
+		return std::to_string(numerator) + " / " + std::to_string(denominator);
+	else
+		return std::to_string(numerator);
 }
 
 bool RationalExpression::isNumber() const
