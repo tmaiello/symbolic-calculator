@@ -90,6 +90,18 @@ void ExpressionList::checkTokenSyntax()
 		if (parenthesesCount < 0)
 			throw new invalid_argument("Parentheses out of order");
 	}
+
+	// Combine subtraction forward
+	for (unsigned i = 0; i < tokenList.size(); i++)
+	{
+		if (tokenList[i]->isOperator() && (i + 1) < tokenList.size() && tokenList[i + 1]->isNumber())
+		{
+			Operator* op = (Operator*)tokenList[i];
+			RationalExpression* num = (RationalExpression*)tokenList[i + 1];
+
+			//if (op->getType() == OperatorToken::SUBTRACT)
+		}
+	}
 }
 
 void ExpressionList::convertToPostfix()
