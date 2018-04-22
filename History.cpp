@@ -34,5 +34,3 @@ list<pair<ExpressionList, RationalExpression>> History::returnList()
 {
     return listOfPairs;
 }
-
-

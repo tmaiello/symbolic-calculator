@@ -76,7 +76,19 @@ void ExpressionList::checkTokenSyntax()
 
 	for (unsigned i = 0; i < tokenList.size(); i++)
 	{
+		if (tokenList[i]->isOperator())
+		{
+			Operator* op = (Operator*)tokenList[i];
 
+			if (op->getType() == OperatorToken::L_PAREN)
+				parenthesesCount++;
+			else if (op->getType() == OperatorToken::R_PAREN)
+				parenthesesCount--;
+		}
+
+		// e.g. ")("
+		if (parenthesesCount < 0)
+			throw new invalid_argument("Parentheses out of order");
 	}
 }
 
