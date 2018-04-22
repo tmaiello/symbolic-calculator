@@ -76,6 +76,21 @@ OperatorToken getOperatorToken(char raw)
 	case '!':
 		return OperatorToken::FACTORIAL;
 		break;
+	case 's':
+		return OperatorToken::SIN;
+		break;
+	case 'c':
+		return OperatorToken::COS;
+		break;
+	case 't':
+		return OperatorToken::TAN;
+		break;
+	case 'n':
+		return OperatorToken::LN;
+		break;
+	case 'l':
+		return OperatorToken::LOG;
+		break;
 	case '(':
 		return OperatorToken::L_PAREN;
 		break;

@@ -25,6 +25,11 @@ enum class OperatorToken
 	MULTIPLY = '*',
 	DIVIDE = '/',
 	FACTORIAL = '!',
+	SIN = 's',
+	COS = 'c',
+	TAN = 't',
+	LN = 'n',
+	LOG = 'l',
 	L_PAREN = '(',
 	R_PAREN = ')',
 	UNKNOWN = '?'

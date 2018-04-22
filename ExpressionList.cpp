@@ -26,26 +26,35 @@ bool ExpressionList::isValidChar(char toTest)
 	return (isNumber(toTest) || (getOperatorToken(toTest) != OperatorToken::UNKNOWN));
 }
 
-void ExpressionList::processToTokens()
+void ExpressionList::cleanInputString()
 {
 	// remove invalid chars
-	string cleaned = input;
-	for (unsigned i = 0; i < cleaned.length(); i++)
-		if (!isValidChar(cleaned[i]) && cleaned[i] != '.')	// exception is made for '.' for decimals
-			cleaned = cleaned.substr(0, i) + cleaned.substr(i + 1);
+	string cleanedInput = input;
+	for (unsigned i = 0; i < cleanedInput.length(); i++)
+		if (!isValidChar(cleanedInput[i]) && cleanedInput[i] != '.')	// exception is made for '.' for decimals
+			cleanedInput = cleanedInput.substr(0, i) + cleanedInput.substr(i + 1);
 
+	while (cleanedInput.find("sin") != string::npos)
+	{
+		int index = cleanedInput.find("sin");
+		cleanedInput.replace(index, 4, "s");
+	}
+}
+
+void ExpressionList::processToTokens()
+{
 	// start processing
-	for (unsigned i = 0; i < cleaned.length(); i++)
+	for (unsigned i = 0; i < cleanedInput.length(); i++)
 	{
 		// process numbers
-		if (isNumber(cleaned[i]))
+		if (isNumber(cleanedInput[i]))
 		{
 			// count until end of number
 			int end = i;
 			int periodFound = false;
-			while (end != cleaned.length() && (isNumber(cleaned[end]) || cleaned[end] == '.'))	// designed to short circuit when out of bounds
+			while (end != cleanedInput.length() && (isNumber(cleanedInput[end]) || cleanedInput[end] == '.'))	// designed to short circuit when out of bounds
 			{
-				if (cleaned[i] == '.')
+				if (cleanedInput[i] == '.')
 					if (periodFound)
 						throw new invalid_argument("More than one period delimiter found in a number");
 					else
@@ -55,17 +64,17 @@ void ExpressionList::processToTokens()
 			}
 
 			// check for invalid period at end
-			if (cleaned[end - 1] == '.')
+			if (cleanedInput[end - 1] == '.')
 				throw new invalid_argument("Period delimiter found at end of number");
 
 			// process the whole number
-			tokenList.push_back(new RationalExpression(cleaned.substr(i, end - i)));
+			tokenList.push_back(new RationalExpression(cleanedInput.substr(i, end - i)));
 			i = end - 1;
 		}
 		// process operators
 		else
-			if (isValidChar(cleaned[i]))
-				tokenList.push_back(new Operator(getOperatorToken(cleaned[i])));
+			if (isValidChar(cleanedInput[i]))
+				tokenList.push_back(new Operator(getOperatorToken(cleanedInput[i])));
 	}
 }
 
@@ -176,4 +185,47 @@ vector<Expression*> ExpressionList::getTokenList() const
 vector<Expression*> ExpressionList::getInPostfix() const
 {
 	return postfix;
+}
+
+int main()
+{
+	string input = "4 * sin(cos(tan(ln(log(sin(4*26)))))";
+	string cleanedInput = input;
+
+	// process trig functions
+	while (cleanedInput.find("sin") != string::npos)
+	{
+		int index = cleanedInput.find("sin");
+		cleanedInput.replace(index, 3, "s");
+	}
+	while (cleanedInput.find("cos") != string::npos)
+	{
+		int index = cleanedInput.find("cos");
+		cleanedInput.replace(index, 3, "c");
+	}
+	while (cleanedInput.find("tan") != string::npos)
+	{
+		int index = cleanedInput.find("tan");
+		cleanedInput.replace(index, 3, "t");
+	}
+
+	// process logs
+	while (cleanedInput.find("ln") != string::npos)
+	{
+		int index = cleanedInput.find("ln");
+		cleanedInput.replace(index, 2, "n");
+	}
+	while (cleanedInput.find("log") != string::npos)
+	{
+		int index = cleanedInput.find("log");
+		cleanedInput.replace(index, 3, "l");
+	}
+
+	// remove invalid chars
+	for (unsigned i = 0; i < cleanedInput.length(); i++)
+		if (!ExpressionList::isValidChar(cleanedInput[i]) && cleanedInput[i] != '.')	// exception is made for '.' for decimals
+			cleanedInput = cleanedInput.substr(0, i) + cleanedInput.substr(i + 1);
+	
+	cout << "Input: " << input << endl;
+	cout << "CleanedInput: " << cleanedInput << endl;
 }

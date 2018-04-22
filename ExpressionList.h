@@ -19,11 +19,13 @@ class ExpressionList
 {
 	private:
 	const string input;
+	string cleanedInput;
 	vector<Expression*> tokenList;
 	vector<Expression*> postfix;
 
-	bool isNumber(char toTest);
-	bool isValidChar(char toTest);
+	static bool isNumber(char toTest);
+	
+	void cleanInputString();
 	void processToTokens();
 	void checkTokenSyntax();
 	void convertToPostfix();
@@ -31,8 +33,11 @@ class ExpressionList
 	public:
 	ExpressionList(string input);
 	string getInput() const;
+	string getCleanedInput() const;
 	vector<Expression*> getTokenList() const;
 	vector<Expression*> getInPostfix() const;
+
+	static bool isValidChar(char toTest);
 };
 
 #endif
