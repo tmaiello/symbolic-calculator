@@ -136,6 +136,7 @@ void ExpressionList::checkTokenSyntax()
 			RationalExpression* num = (RationalExpression*)tokenList[i + 1];
 
 			//if (op->getType() == OperatorToken::SUBTRACT)
+
 		}
 	}
 }
@@ -226,6 +227,15 @@ int main()
 	cout << "Stored input: " << input << endl;
 	cout << "Stored result: " << storedResult << endl;
 
+	string historyOutput = "";
+	auto historyList = testHistory->returnList();
+	for (auto iter = historyList.begin(); iter != historyList.end(); iter++)
+	{
+		historyOutput += (*iter).first->getInput() + " = " + (*iter).second->output() + "\n";
+	}
+
+	cout << "historyOutput: " << endl << historyOutput << endl;
+
 	/*
 	string input = "4 * sin(cos(tan(ln(log(sin(4*26)))))";
 	string cleanedInput = input;
@@ -267,4 +277,4 @@ int main()
 	cout << "Input: " << input << endl;
 	cout << "CleanedInput: " << cleanedInput << endl;
 	*/
-}
+[}
