@@ -81,7 +81,7 @@ void ExpressionList::cleanInputString()
 	while (cleanedInput.find("pi") != string::npos)
 	{
 		int index = cleanedInput.find("pi");
-		cleanedInput.replace(index, 3, "p");
+		cleanedInput.replace(index, 2, "p");
 	}
 
 	// remove invalid chars
@@ -265,7 +265,7 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
-	string testInput = "5-6++11";
+	string testInput = "5-6++11*(pi-e)";
 	ExpressionList* testExp = new ExpressionList(testInput);
 
 	/*
