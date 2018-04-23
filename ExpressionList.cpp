@@ -183,7 +183,77 @@ void ExpressionList::checkTokenSyntax()
 		}
 	}
 
-	// find numbers preceded by '-' signs
+	// Find parentheses/functions/irrationals next to numbers
+	for (unsigned i = 0; i < tokenList.size(); i++)
+	{
+		if (tokenList[i]->isOperator())
+		{
+			Operator* op = (Operator*)tokenList[i];
+
+			if (op->getType() == OperatorToken::L_PAREN && i > 0 && tokenList[i - 1]->isNumber())
+				tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+			else if (op->getType() == OperatorToken::R_PAREN && (i + 1) < tokenList.size() && tokenList[i + 1]->isNumber())
+				tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			else if (op->getType() == OperatorToken::SIN)
+			{
+				if (i > 0 && tokenList[i - 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+
+				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			}
+			else if (op->getType() == OperatorToken::COS)
+			{
+				if (i > 0 && tokenList[i - 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+
+				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			}
+			else if (op->getType() == OperatorToken::TAN)
+			{
+				if (i > 0 && tokenList[i - 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+
+				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			}
+			else if (op->getType() == OperatorToken::LN)
+			{
+				if (i > 0 && tokenList[i - 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+
+				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			}
+			else if (op->getType() == OperatorToken::LOG)
+			{
+				if (i > 0 && tokenList[i - 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+
+				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			}
+			else if (op->getType() == OperatorToken::PI)
+			{
+				if (i > 0 && tokenList[i - 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+
+				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			}
+			else if (op->getType() == OperatorToken::E)
+			{
+				if (i > 0 && tokenList[i - 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+
+				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
+					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
+			}
+		}
+	}
+
+	// Find numbers preceded by '-' signs
 	for (unsigned i = 1; i < tokenList.size(); i++)
 	{
 		if (tokenList[i]->isNumber() && tokenList[i - 1]->isOperator())
@@ -351,9 +421,10 @@ vector<Expression*> ExpressionList::getInPostfix() const
 int main()
 {
 	cout << endl;
-	ExpressionList* unicorns = new ExpressionList("ln(e)");
+	ExpressionList* unicorns = new ExpressionList("2(6)");
 	//ExpressionList* unicorns = new ExpressionList("14/2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
+	cout << "REACHED END" << endl;
 	cout << "Result: " << rainbows->output() << endl;
 	//testHistory->storePair(testHistory->createPair(unicorns, rainbows));
 	//string input = testHistory->returnList().front().first->getInput();
