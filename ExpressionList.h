@@ -37,10 +37,7 @@ class ExpressionList
 
 	public:
 
-	/*
-	*	[ ExpressionList Constructor ]
-	*	This constructor is vitally important to the project.
-	*/
+	// constructor
 	ExpressionList(string input);
 
 	// accessors

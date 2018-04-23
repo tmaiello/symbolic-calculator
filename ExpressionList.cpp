@@ -13,7 +13,15 @@
 #include <cmath>
 
 /*
+*	This constructor is vitally important to the project.
+*	Actual processing and conversion of input strings happens inside of the methods in this constructor. This conversion and subsequent resorting into postfix notation is almost half of the work done in this project.
+*	Since all of the string parsing happens in private helper methods called in this constructor, almost every possible error will be avoided or thrown here.
 *
+*	Four methods are called as part of this instructor:
+*	- cleanInputString(): Fills the cleanedInput field with validated input from the provided input
+*	- processToTokens(): Fills the tokenList field with a tokenized version of the cleaned input, with tokens for RationalExpression and Operator objects
+*	- checkTokenSyntax(): Catches the vast majority of errors in the program, and handles them or throws them back. Verifies that the tokenized list is a valid expression that can be evaluated.
+*	- convertToPostfix(): Resorts the tokenized list into postfix notation. At this point the postfix field should be entirely valid for Interpreter to process.
 */
 ExpressionList::ExpressionList(string input) : input(input)
 {
@@ -170,6 +178,10 @@ void ExpressionList::checkTokenSyntax()
 			}
 		}
 	}
+
+	// Check for operators at end
+	while (!tokenList.empty() && tokenList.back()->isOperator())
+		tokenList.erase(tokenList.end() - 1);
 
 	// Find parentheses/functions/irrationals next to numbers
 	for (unsigned i = 0; i < tokenList.size(); i++)
@@ -392,5 +404,6 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
-	ExpressionList* test = new ExpressionList("ln(5+4)");
+	ExpressionList* test = new ExpressionList("5+");
+	
 }
