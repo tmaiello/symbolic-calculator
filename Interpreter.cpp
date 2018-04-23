@@ -20,6 +20,10 @@
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
     input = std::move(pass);
+    if (input.empty())
+    {
+        throw invalid_argument("Cannot resolve empty expression.");
+    }
     interpret();
 }
 
