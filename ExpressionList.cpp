@@ -8,6 +8,9 @@
 #include <stack>
 #include <math.h>
 
+#include "History.h"
+#include "Interpreter.h"
+
 // Math constants
 const string PI = "3.14159";
 const string E = "2.71828";
@@ -167,11 +170,21 @@ void ExpressionList::checkTokenSyntax()
 			{
 				tokenList[i + 1] = RationalExpression::negate(*num);
 				tokenList.erase(tokenList.begin() + i);
-			}
 
-			// make sure addition precedes the new negated number
-			if (i > 0 && tokenList[i - 1]->isNumber())
-				tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
+				// make sure addition precedes the new negated number
+				if (i > 0)
+				{
+					if (tokenList[i - 1]->isNumber())
+						tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
+					else
+					{
+						Operator* prevOp = (Operator*)tokenList[i - 1];
+
+						if (prevOp->getType() == OperatorToken::R_PAREN)
+							tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
+					}
+				}
+			}
 		}
 	}
 
@@ -265,12 +278,10 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
-	string testInput = "5-6++11*(pi-e)";
-	ExpressionList* testExp = new ExpressionList(testInput);
-
-	/*
+	cout << endl;
 	History* testHistory = new History();
-	ExpressionList* unicorns = new ExpressionList("(4 * (14/2) - 32/4) / 10 + 2");
+	ExpressionList* unicorns = new ExpressionList("ln(6-6)");
+	//ExpressionList* unicorns = new ExpressionList("14/2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
 	cout << "Result: " << rainbows->output() << endl;
 	testHistory->storePair(testHistory->createPair(unicorns, rainbows));
@@ -279,6 +290,7 @@ int main()
 	cout << "Stored input: " << input << endl;
 	cout << "Stored result: " << storedResult << endl;
 
+	/*
 	string historyOutput = "";
 	auto historyList = testHistory->returnList();
 	for (auto iter = historyList.begin(); iter != historyList.end(); iter++)
@@ -286,47 +298,5 @@ int main()
 		historyOutput += (*iter).first->getInput() + " = " + (*iter).second->output() + "\n";
 	}
 
-	cout << "historyOutput: " << endl << historyOutput << endl;
-
-	/*
-	string input = "4 * sin(cos(tan(ln(log(sin(4*26)))))";
-	string cleanedInput = input;
-
-	// process trig functions
-	while (cleanedInput.find("sin") != string::npos)
-	{
-		int index = cleanedInput.find("sin");
-		cleanedInput.replace(index, 3, "s");
-	}
-	while (cleanedInput.find("cos") != string::npos)
-	{
-		int index = cleanedInput.find("cos");
-		cleanedInput.replace(index, 3, "c");
-	}
-	while (cleanedInput.find("tan") != string::npos)
-	{
-		int index = cleanedInput.find("tan");
-		cleanedInput.replace(index, 3, "t");
-	}
-
-	// process logs
-	while (cleanedInput.find("ln") != string::npos)
-	{
-		int index = cleanedInput.find("ln");
-		cleanedInput.replace(index, 2, "n");
-	}
-	while (cleanedInput.find("log") != string::npos)
-	{
-		int index = cleanedInput.find("log");
-		cleanedInput.replace(index, 3, "l");
-	}
-
-	// remove invalid chars
-	for (unsigned i = 0; i < cleanedInput.length(); i++)
-		if (!ExpressionList::isValidChar(cleanedInput[i]) && cleanedInput[i] != '.')	// exception is made for '.' for decimals
-			cleanedInput = cleanedInput.substr(0, i) + cleanedInput.substr(i + 1);
-	
-	cout << "Input: " << input << endl;
-	cout << "CleanedInput: " << cleanedInput << endl;
-	*/
+	cout << "historyOutput: " << endl << historyOutput << endl;*/
 }

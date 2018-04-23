@@ -22,13 +22,11 @@
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
     input = pass;
-    cout << "Constructed" << endl;
     interpret();
 }
 
 void Interpreter::interpret()
 {
-    cout << "I'm running whoop de doo" << endl;
     for (Expression* exp : input)
     {
         if (exp->isOperator())
