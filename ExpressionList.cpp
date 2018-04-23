@@ -2,36 +2,24 @@
 *	Defines the ExpressionList class, which is processed by the Interpreter to calculate a rational numerical result for the input.
 */
 
+// for math constants
+#define _USE_MATH_DEFINES
+// project headers
 #include "ExpressionList.h"
 #include "RationalExpression.h"
+// standard library
 #include <iostream>
 #include <stack>
-#include <math.h>
+#include <cmath>
 
-#include "History.h"
-#include "Interpreter.h"
-
-// Math constants
-const string PI = "3.14159";
-const string E = "2.71828";
-
+/*
+*
+*/
 ExpressionList::ExpressionList(string input) : input(input)
 {
 	cleanInputString();
 	processToTokens();
-
-	cout << "BEFORE CLEAN" << endl;
-	for (unsigned i = 0; i < tokenList.size(); i++)
-		cout << tokenList[i]->toString() << " ";
-	cout << "END" << endl;
-
 	checkTokenSyntax();
-
-	cout << "AFTER CLEAN" << endl;
-	for (unsigned i = 0; i < tokenList.size(); i++)
-		cout << tokenList[i]->toString() << " ";
-	cout << "END" << endl;
-
 	convertToPostfix();
 }
 
@@ -127,9 +115,9 @@ void ExpressionList::processToTokens()
 		else
 		{
 			if (getOperatorToken(cleanedInput[i]) == OperatorToken::PI)
-				tokenList.push_back(new RationalExpression(PI));
+				tokenList.push_back(new RationalExpression(M_PI));
 			else if (getOperatorToken(cleanedInput[i]) == OperatorToken::E)
-				tokenList.push_back(new RationalExpression(E));
+				tokenList.push_back(new RationalExpression(M_E));
 			else if (isValidChar(cleanedInput[i]))
 				tokenList.push_back(new Operator(getOperatorToken(cleanedInput[i])));
 		}
@@ -234,24 +222,13 @@ void ExpressionList::checkTokenSyntax()
 				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
 					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
 			}
-			else if (op->getType() == OperatorToken::PI)
-			{
-				if (i > 0 && tokenList[i - 1]->isNumber())
-					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
-
-				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
-					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
-			}
-			else if (op->getType() == OperatorToken::E)
-			{
-				if (i > 0 && tokenList[i - 1]->isNumber())
-					tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
-
-				if (i < tokenList.size() && tokenList[i + 1]->isNumber())
-					tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
-			}
 		}
 	}
+
+	// Add multiplication to numbers next to each other
+	for (unsigned i = 0; (i + 1) < tokenList.size(); i++)
+		if (tokenList[i]->isNumber() && tokenList[i + 1]->isNumber())
+			tokenList.emplace(tokenList.begin() + i + 1, new Operator(OperatorToken::MULTIPLY));
 
 	// Find numbers preceded by '-' signs
 	for (unsigned i = 1; i < tokenList.size(); i++)
@@ -285,17 +262,12 @@ void ExpressionList::checkTokenSyntax()
 
 				// insert parentheses end
 				tokenList.emplace(tokenList.begin() + end - 1, new Operator(OperatorToken::R_PAREN));
-
-				cout << "TEST" << endl;
-				for (unsigned i = 0; i < tokenList.size(); i++)
-					cout << tokenList[i]->toString() << " ";
-				cout << "END" << endl;
 			}
 		}
 	}
 
 	// Fix bad subtraction
-	while (tokenList.front()->isOperator())
+	while (!tokenList.empty() && tokenList.front()->isOperator())
 	{
 		Operator* op = (Operator*)tokenList.front();
 
@@ -420,15 +392,5 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
-	cout << endl;
-	ExpressionList* unicorns = new ExpressionList("2(6)");
-	//ExpressionList* unicorns = new ExpressionList("14/2");
-	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
-	cout << "REACHED END" << endl;
-	cout << "Result: " << rainbows->output() << endl;
-	//testHistory->storePair(testHistory->createPair(unicorns, rainbows));
-	//string input = testHistory->returnList().front().first->getInput();
-	//string storedResult = testHistory->returnList().front().second->output();
-	//cout << "Stored input: " << input << endl;
-	//cout << "Stored result: " << storedResult << endl;
+	ExpressionList* test = new ExpressionList("ln(5+4)");
 }
