@@ -1,9 +1,15 @@
+/*
+*	Defines the RationalExpression class, which is used to store rational forms of numbers (e.g. 7 is stored as { 7 / 1 }) and process operations on those rational forms.
+*/
+
+//project headers
+#include "RationalExpression.h"
+//standard library
 #include <iostream>
 #include <cmath>
 #include <numeric>
 #include <sstream>
 #include <limits>
-#include "RationalExpression.h"
 
 RationalExpression::RationalExpression(long long num, long long denom)
 {
