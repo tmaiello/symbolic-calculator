@@ -280,7 +280,7 @@ int main()
 {
 	cout << endl;
 	History* testHistory = new History();
-	ExpressionList* unicorns = new ExpressionList("ln(6-6)");
+	ExpressionList* unicorns = new ExpressionList("2^-2");
 	//ExpressionList* unicorns = new ExpressionList("14/2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
 	cout << "Result: " << rainbows->output() << endl;

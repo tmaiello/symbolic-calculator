@@ -82,7 +82,7 @@ void Interpreter::interpret()
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     double simplify = exp1->toDouble();
-                    double sinVal = std::sin(simplify);
+                    double sinVal = std::sin(simplify * ( M_PI / 180));
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << sinVal;
                     std::string toString = stream.str();
@@ -95,7 +95,7 @@ void Interpreter::interpret()
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     double simplify = exp1->toDouble();
-                    double cosVal = std::cos(simplify);
+                    double cosVal = std::cos(simplify * ( M_PI / 180));
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << cosVal;
                     std::string toString = stream.str();
@@ -108,7 +108,7 @@ void Interpreter::interpret()
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     double simplify = exp1->toDouble();
-                    double tanVal = std::cos(simplify);
+                    double tanVal = std::cos(simplify * ( M_PI / 180));
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << tanVal;
                     std::string toString = stream.str();
@@ -121,6 +121,10 @@ void Interpreter::interpret()
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     double simplify = exp1->toDouble();
+                    if (simplify <= 0)
+                    {
+                         throw new invalid_argument("Ln out of bounds.");
+                    }
                     double lnVal = std::log(simplify);
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << lnVal;
@@ -134,6 +138,10 @@ void Interpreter::interpret()
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     double simplify = exp1->toDouble();
+                    if (simplify <= 0)
+                    {
+                        throw new invalid_argument("Log out of bounds.");
+                    }
                     double logVal = std::log10(simplify);
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << logVal;
@@ -152,11 +160,15 @@ void Interpreter::interpret()
                     double1 = exp1->toDouble();
                     double double2;
                     double2 = exp2->toDouble();
-                    double expVal = std::pow(double1, double2);
+                    std::cout << "BALLS" << std::endl;
+                    double expVal = std::pow(double2, double1);
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << expVal;
                     std::string toString = stream.str();
+                    std::cout << "BALLS2" << std::endl;
+                    std::cout << toString << std::endl;
                     auto expDone = new RationalExpression(toString);
+                    std::cout << "BALLS3" << std::endl;
                     expStack.push(expDone);
                     break;
                 }
