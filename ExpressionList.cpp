@@ -550,8 +550,3 @@ vector<Expression*> ExpressionList::getInPostfix() const
 {
 	return postfix;
 }
-
-int main()
-{
-	ExpressionList* test = new ExpressionList("(e^9)");
-}
