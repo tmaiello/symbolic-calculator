@@ -20,6 +20,18 @@
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
     input = std::move(pass);
+    bool hasRationalExpression = false;
+    for (Expression* exp : input)
+    {
+        if (exp->isNumber())
+        {
+            hasRationalExpression = true;
+        }
+    }
+    if (input.empty() || (!(hasRationalExpression)))
+    {
+        throw invalid_argument("Cannot resolve empty expression.");
+    }
     interpret();
 }
 
@@ -180,6 +192,7 @@ void Interpreter::interpret()
                     expStack.push(lnDone);
                     break;
                 }
+
                 /*
                 * Log case pops one object from stack and applies log operator to it
                 * It then pushes the answer from log operator back onto the stack.

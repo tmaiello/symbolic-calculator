@@ -1,5 +1,5 @@
 /*
-*	Defines the RationalExpression class, which is used to store rational forms of numbers (e.g. 7 is stored as { 7 / 1 }) and process operations on those rational forms.
+*	Declares the RationalExpression class, which is used to store rational forms of numbers (e.g. 7 is stored as { 7 / 1 }) and process operations on those rational forms.
 */
 
 #ifndef RATIONALEXPRESSION_H
