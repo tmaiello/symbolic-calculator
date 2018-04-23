@@ -8,20 +8,9 @@
 #include "RationalExpression.h"
 #include "Operator.h"
 
-/*int main()
-{
-	string testInput = "(4 * (14/2) - 32/4) / 10 + 2";
-	ExpressionList* test = new ExpressionList(testInput);
-	Interpreter* testInt = new Interpreter(test->getInPostfix());
-    std::cout << testInt->output() << std::endl;
-
-    return 0;
-}*/
-
-
 Interpreter::Interpreter(std::vector<Expression*> pass)
 {
-    input = pass;
+    input = std::move(pass);
     interpret();
 }
 
@@ -160,15 +149,11 @@ void Interpreter::interpret()
                     double1 = exp1->toDouble();
                     double double2;
                     double2 = exp2->toDouble();
-                    std::cout << "BALLS" << std::endl;
                     double expVal = std::pow(double2, double1);
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << expVal;
                     std::string toString = stream.str();
-                    std::cout << "BALLS2" << std::endl;
-                    std::cout << toString << std::endl;
                     auto expDone = new RationalExpression(toString);
-                    std::cout << "BALLS3" << std::endl;
                     expStack.push(expDone);
                     break;
                 }
@@ -176,7 +161,8 @@ void Interpreter::interpret()
                 {
                     break;
                 }
-                case OperatorToken::R_PAREN: {
+                case OperatorToken::R_PAREN:
+                {
                     break;
                 }
             }
