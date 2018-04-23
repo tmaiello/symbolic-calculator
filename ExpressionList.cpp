@@ -266,8 +266,13 @@ void ExpressionList::checkTokenSyntax()
 				// just error out, bad input
 				throw invalid_argument("Invalid operators after parentheses");
 
-			// if the two operators are different, and neither is minus or parentheses:
+			// if the two operators are different, and neither is minus/function/parentheses:
 			else if (op1->getType() != OperatorToken::SUBTRACT && op2->getType() != OperatorToken::SUBTRACT
+				&& op1->getType() != OperatorToken::SIN && op2->getType() != OperatorToken::SIN
+				&& op1->getType() != OperatorToken::COS && op2->getType() != OperatorToken::COS
+				&& op1->getType() != OperatorToken::TAN && op2->getType() != OperatorToken::TAN
+				&& op1->getType() != OperatorToken::LN && op2->getType() != OperatorToken::LN
+				&& op1->getType() != OperatorToken::LOG && op2->getType() != OperatorToken::LOG
 				&& op1->getType() != OperatorToken::L_PAREN && op2->getType() != OperatorToken::L_PAREN
 				&& op1->getType() != OperatorToken::R_PAREN && op2->getType() != OperatorToken::R_PAREN)
 				// just error out, bad input
@@ -284,8 +289,8 @@ void ExpressionList::checkTokenSyntax()
 		// valid cast because isOperator() must be true for this to execute
 		Operator* op = (Operator*)tokenList.front();
 
-		// if operator at beginning is not a function/parentheses:
-		if (op->getType() != OperatorToken::SIN && op->getType() != OperatorToken::COS && op->getType() != OperatorToken::TAN
+		// if operator at beginning is not a minus/function/parentheses:
+		if (op->getType() != OperatorToken::SUBTRACT && op->getType() != OperatorToken::SIN && op->getType() != OperatorToken::COS && op->getType() != OperatorToken::TAN
 			&& op->getType() != OperatorToken::LN && op->getType() != OperatorToken::LOG && op->getType() != OperatorToken::L_PAREN)
 			throw invalid_argument("Start of expression must be a number, function, or parenthesis");
 		// otherwise break to avoid infinite loop
