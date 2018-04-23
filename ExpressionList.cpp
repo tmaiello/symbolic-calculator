@@ -115,9 +115,9 @@ void ExpressionList::processToTokens()
 		else
 		{
 			if (getOperatorToken(cleanedInput[i]) == OperatorToken::PI)
-				tokenList.push_back(new RationalExpression(M_PI));
+				tokenList.push_back(new RationalExpression(to_string(M_PI)));
 			else if (getOperatorToken(cleanedInput[i]) == OperatorToken::E)
-				tokenList.push_back(new RationalExpression(M_E));
+				tokenList.push_back(new RationalExpression(to_string(M_E)));
 			else if (isValidChar(cleanedInput[i]))
 				tokenList.push_back(new Operator(getOperatorToken(cleanedInput[i])));
 		}
