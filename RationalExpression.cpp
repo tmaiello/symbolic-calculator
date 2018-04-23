@@ -44,13 +44,21 @@ RationalExpression::RationalExpression(std::string value)
         auto integer = RationalExpression(beforeDecimal);
         auto pair = std::make_pair(stringValue , period);
         auto decimal = makeDecimalFraction(pair);
-        auto finalAnswer = add(integer, decimal);
+        RationalExpression *finalAnswer = NULL;
+        if (decimal.second)
+        {
+            finalAnswer = add(integer, decimal.first);
+        }
+        else
+        {
+            finalAnswer = &integer;
+        }
         numerator = finalAnswer->numerator;
         denominator = finalAnswer->denominator;
     }
 }
 
-RationalExpression RationalExpression::makeDecimalFraction(std::pair<std::string, long long> &value)
+std::pair<RationalExpression, bool> RationalExpression::makeDecimalFraction(std::pair<std::string, long long> &value)
 {
     std::string afterDecimalString;
     afterDecimalString = value.first.substr(static_cast<unsigned long long>(value.second) + 1);
@@ -58,14 +66,21 @@ RationalExpression RationalExpression::makeDecimalFraction(std::pair<std::string
     removedZeros.append(afterDecimalString);
     removedZeros.erase(removedZeros.find_last_not_of('0') + 1, std::string::npos);
     unsigned long long removedZerosSize = removedZeros.size();
-    long long newDenominator;
-    newDenominator = 1;
-    for (unsigned long long x = 0; x < removedZerosSize; x++) {
-        newDenominator = newDenominator * 10;
+    long long newDenominator = 1;
+    long long afterDecimal = 1;
+    bool isGood = false;
+    if (removedZerosSize != 0)
+    {
+        isGood = true;
+        newDenominator = 1;
+        for (unsigned long long x = 0; x < removedZerosSize; x++)
+        {
+            newDenominator = newDenominator * 10;
+        }
+        afterDecimal = stoll(removedZeros);
     }
-    long long afterDecimal;
-    afterDecimal = stoll(removedZeros);
-    return {afterDecimal, newDenominator};
+    auto toReturn = std::make_pair(RationalExpression(afterDecimal, newDenominator), isGood);
+    return toReturn;
 }
 
 RationalExpression* RationalExpression::add(RationalExpression one, RationalExpression two) //one + two
