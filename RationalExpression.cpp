@@ -33,6 +33,12 @@ RationalExpression::RationalExpression(std::string value)
     period = -1;
     unsigned long long stringSize;
     stringSize = stringValue.size();
+    bool sign = false;
+    char stringFirst = stringValue.at(0);
+    if (stringFirst == '')
+    {
+        sign = true;
+    }
     for (unsigned long long x = 0; x < stringSize; x++)
 	{
         if (stringValue.at(x) == '.')
@@ -62,7 +68,14 @@ RationalExpression::RationalExpression(std::string value)
         {
             finalAnswer = &integer;
         }
-        numerator = finalAnswer->numerator;
+        if (sign)
+        {
+            numerator = -(finalAnswer->numerator);
+        }
+        else
+        {
+            numerator = finalAnswer->numerator;
+        }
         denominator = finalAnswer->denominator;
     }
 }
