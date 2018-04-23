@@ -1,6 +1,4 @@
-//
-// Defines the History class which stores expression history.
-//
+/*Defines the History class which stores expression history. */
 
 #ifndef HISTORY_H
 #define HISTORY_H
@@ -13,9 +11,16 @@ using namespace std;
 #include "Interpreter.h"
 
 
+/*
+ * [History]
+ * -Creates a pair of objects from the two classes,
+ *  ExpressionList and Interpreter.
+ * -Stores that pair in a list.
+ * -Returns the entire list to the Qt class.
+*/
 
-
-class History {
+class History
+{
 
 private:
     list<pair<ExpressionList*, Interpreter*>> listOfPairs;
