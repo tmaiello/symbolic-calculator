@@ -108,7 +108,7 @@ void Interpreter::interpret()
                     auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
                     expStack.pop();
                     double simplify = exp1->toDouble();
-                    double tanVal = std::cos(simplify * ( M_PI / 180));
+                    double tanVal = std::tan(simplify * ( M_PI / 180));
                     std::stringstream stream;
                     stream << fixed << std::setprecision(6) << tanVal;
                     std::string toString = stream.str();
