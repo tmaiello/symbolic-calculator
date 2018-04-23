@@ -183,37 +183,6 @@ void ExpressionList::checkTokenSyntax()
 		}
 	}
 
-	/*
-	// Combine subtraction forward
-	for (unsigned i = 0; i < tokenList.size(); i++)
-	{
-		if (tokenList[i]->isOperator() && (i + 1) < tokenList.size() && tokenList[i + 1]->isNumber())
-		{
-			Operator* op = (Operator*)tokenList[i];
-			RationalExpression* num = (RationalExpression*)tokenList[i + 1];
-
-			if (op->getType() == OperatorToken::SUBTRACT)
-			{
-				tokenList[i + 1] = RationalExpression::negate(*num);
-				tokenList.erase(tokenList.begin() + i);
-
-				// make sure addition precedes the new negated number
-				if (i > 0)
-				{
-					if (tokenList[i - 1]->isNumber())
-						tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
-					else
-					{
-						Operator* prevOp = (Operator*)tokenList[i - 1];
-
-						if (prevOp->getType() == OperatorToken::R_PAREN)
-							tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
-					}
-				}
-			}
-		}
-	}*/
-
 	// find numbers preceded by '-' signs
 	for (unsigned i = 1; i < tokenList.size(); i++)
 	{
@@ -376,19 +345,3 @@ vector<Expression*> ExpressionList::getInPostfix() const
 {
 	return postfix;
 }
-
-/*
-int main()
-{
-	cout << endl;
-	History* testHistory = new History();
-	ExpressionList* unicorns = new ExpressionList("-1*-(ln(5))");
-	//ExpressionList* unicorns = new ExpressionList("14/2");
-	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
-	cout << "Result: " << rainbows->output() << endl;
-	//testHistory->storePair(testHistory->createPair(unicorns, rainbows));
-	//string input = testHistory->returnList().front().first->getInput();
-	//string storedResult = testHistory->returnList().front().second->output();
-	//cout << "Stored input: " << input << endl;
-	//cout << "Stored result: " << storedResult << endl;
-}*/
