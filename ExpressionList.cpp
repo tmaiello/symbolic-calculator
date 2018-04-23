@@ -279,7 +279,7 @@ void ExpressionList::checkTokenSyntax()
 	/* Check for operators at beginning/end */
 
 	// check beginning
-	while (!tokenList.empty() && tokenList.front()->isOperator)
+	while (!tokenList.empty() && tokenList.front()->isOperator())
 	{
 		// valid cast because isOperator() must be true for this to execute
 		Operator* op = (Operator*)tokenList.front();
@@ -288,17 +288,23 @@ void ExpressionList::checkTokenSyntax()
 		if (op->getType() != OperatorToken::SIN && op->getType() != OperatorToken::COS && op->getType() != OperatorToken::TAN
 			&& op->getType() != OperatorToken::LN && op->getType() != OperatorToken::LOG && op->getType() != OperatorToken::L_PAREN)
 			throw invalid_argument("Start of expression must be a number, function, or parenthesis");
+		// otherwise break to avoid infinite loop
+		else
+			break;
 	}
 
 	// check end
 	while (!tokenList.empty() && tokenList.back()->isOperator())
 	{
 		// valid cast because isOperator() must be true for this to execute
-		Operator* op = (Operator*)tokenList.front();
+		Operator* op = (Operator*)tokenList.back();
 
 		// if operator at end is not a parenthesis:
 		if (op->getType() != OperatorToken::R_PAREN)
 			throw invalid_argument("Cannot parse expression ending in an operator");
+		// otherwise break to avoid infinite loop
+		else
+			break;
 	}
 
 	
@@ -543,4 +549,9 @@ vector<Expression*> ExpressionList::getTokenList() const
 vector<Expression*> ExpressionList::getInPostfix() const
 {
 	return postfix;
+}
+
+int main()
+{
+	ExpressionList* test = new ExpressionList("(e^9)");
 }
