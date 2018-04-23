@@ -11,18 +11,21 @@
 #include <sstream>
 #include <limits>
 
+// initializes based on a precalculated numerator/denominator pair
 RationalExpression::RationalExpression(long long num, long long denom)
 {
     numerator = num;
     denominator = denom;
 }
 
+// converts a whole number into rational form
 RationalExpression::RationalExpression(long long value)
 {
     numerator = value;
     denominator = 1;
 }
 
+// converts a string into its rational form; accepts both whole numbers and decimals
 RationalExpression::RationalExpression(std::string value)
 {
     std::string stringValue = std::move(value);
@@ -64,6 +67,7 @@ RationalExpression::RationalExpression(std::string value)
     }
 }
 
+// used in string constructor
 std::pair<RationalExpression, bool> RationalExpression::makeDecimalFraction(std::pair<std::string, long long> &value)
 {
     std::string afterDecimalString;
@@ -89,6 +93,7 @@ std::pair<RationalExpression, bool> RationalExpression::makeDecimalFraction(std:
     return toReturn;
 }
 
+// static method that adds two RationalExpression objects and returns a pointer to a new RationalExpression
 RationalExpression* RationalExpression::add(RationalExpression one, RationalExpression two) //one + two
 {
     long long newDenom;
@@ -103,6 +108,7 @@ RationalExpression* RationalExpression::add(RationalExpression one, RationalExpr
     return toReturn;
 }
 
+// static method that subtracts two RationalExpression objects and returns a pointer to a new RationalExpression
 RationalExpression* RationalExpression::subtract(RationalExpression one, RationalExpression two) //one - two
 {
     long long newDenom;
@@ -117,6 +123,7 @@ RationalExpression* RationalExpression::subtract(RationalExpression one, Rationa
     return toReturn;
 }
 
+// static method that multiplies two RationalExpression objects and returns a pointer to a new RationalExpression
 RationalExpression* RationalExpression::multiply(RationalExpression one, RationalExpression two) //one * two
 {
     long long newDenom;
@@ -127,6 +134,7 @@ RationalExpression* RationalExpression::multiply(RationalExpression one, Rationa
     return toReturn;
 }
 
+// static method that divides two RationalExpression objects and returns a pointer to a new RationalExpression
 RationalExpression* RationalExpression::divide(RationalExpression one, RationalExpression two) //one / two
 {
     long long newDenom;
@@ -137,6 +145,7 @@ RationalExpression* RationalExpression::divide(RationalExpression one, RationalE
     return toReturn;
 }
 
+// static method that simplifies a RationalExpression object and returns a pointer to a new RationalExpression
 RationalExpression* RationalExpression::simplify(RationalExpression input)
 {
     long long numerator;
@@ -151,6 +160,7 @@ RationalExpression* RationalExpression::simplify(RationalExpression input)
     return toReturn;
 }
 
+// static method that flips sign of numerator and returns a pointer to a new RationalExpression
 RationalExpression *RationalExpression::negate(RationalExpression input)
 {
     long long negateNum = -(input.numerator);
@@ -158,11 +168,13 @@ RationalExpression *RationalExpression::negate(RationalExpression input)
     return toReturn;
 }
 
+// returns a double made by dividing numerator by denominator
 double RationalExpression::toDouble() const {
     double simplify = static_cast<double>(numerator) / static_cast<double>(denominator);
     return simplify;
 }
 
+// returns either numerator or denominator, the bigger one gets returned
 long long RationalExpression::maxValue()
 {
     if (numerator > denominator)
@@ -175,6 +187,7 @@ long long RationalExpression::maxValue()
     }
 }
 
+// returns string representation of RationalExpression
 std::string RationalExpression::toString() const
 {
 	if (denominator != 1)
@@ -183,6 +196,7 @@ std::string RationalExpression::toString() const
 		return std::to_string(numerator);
 }
 
+// returns greatest common denominator, useful for simplify function
 long long RationalExpression::gcd()
 {
     long long num1;
@@ -198,11 +212,13 @@ long long RationalExpression::gcd()
     return num1;
 }
 
+// returns true since RationalExpression is a RationalExpression
 bool RationalExpression::isNumber() const
 {
 	return true;
 }
 
+// returns false since RationalExpression is not Operator
 bool RationalExpression::isOperator() const
 {
 	return false;

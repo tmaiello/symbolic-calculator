@@ -23,23 +23,23 @@ class RationalExpression : public Expression
     explicit RationalExpression(std::string value);			// converts a string into its rational form; accepts both whole numbers and decimals
 
 	// operator functions
-	static RationalExpression* add(RationalExpression one, RationalExpression two);
-	static RationalExpression* subtract(RationalExpression one, RationalExpression two);
-	static RationalExpression* multiply(RationalExpression one, RationalExpression two);
-	static RationalExpression* divide(RationalExpression one, RationalExpression two);
-	static RationalExpression* simplify(RationalExpression input);
-	static RationalExpression* negate(RationalExpression input);
+	static RationalExpression* add(RationalExpression one, RationalExpression two);         // static method that adds two RationalExpression objects and returns a pointer to a new RationalExpression
+	static RationalExpression* subtract(RationalExpression one, RationalExpression two);    // static method that subtracts two RationalExpression objects and returns a pointer to a new RationalExpression
+	static RationalExpression* multiply(RationalExpression one, RationalExpression two);    // static method that multiplies two RationalExpression objects and returns a pointer to a new RationalExpression
+	static RationalExpression* divide(RationalExpression one, RationalExpression two);      // static method that divides two RationalExpression objects and returns a pointer to a new RationalExpression
+	static RationalExpression* simplify(RationalExpression input);                          // static method that simplifies a RationalExpression object and returns a pointer to a new RationalExpression
+	static RationalExpression* negate(RationalExpression input);                            // static method that flips sign of numerator and returns a pointer to a new RationalExpression
 
 	// value/constant methods
-	long long maxValue();
-	bool isNumber() const override;
-	bool isOperator() const override;
+	long long maxValue();             // returns either numerator or denominator, the bigger one gets returned
+	bool isNumber() const override;   // returns true since RationalExpression is a RationalExpression
+	bool isOperator() const override; // returns false since RationalExpression is not Operator
 
 	// utility methods
-    static std::pair<RationalExpression, bool> makeDecimalFraction(std::pair<std::string, long long> &value);
-    long long gcd();
-    std::string toString() const override;
-	double toDouble() const;
+    static std::pair<RationalExpression, bool> makeDecimalFraction(std::pair<std::string, long long> &value); // used in string constructor
+    long long gcd();                        // returns greatest common denominator, useful for simplify function
+    std::string toString() const override;  // returns string representation of RationalExpression
+	double toDouble() const;                // returns a double made by dividing numerator by denominator
 };
 
 #endif
