@@ -158,6 +158,32 @@ void ExpressionList::checkTokenSyntax()
 			throw new invalid_argument("Parentheses out of order");
 	}
 
+	// Look for double operators
+	for (unsigned i = 0; i < tokenList.size(); i++)
+	{
+		if (tokenList[i]->isOperator() && (i + 1) < tokenList.size() && tokenList[i + 1]->isOperator())
+		{
+			Operator* op1 = (Operator*)tokenList[i];
+			Operator* op2 = (Operator*)tokenList[i + 1];
+
+			if (op1->getType() == op2->getType())
+			{
+				if (op1->getType() != OperatorToken::SUBTRACT)
+					tokenList.erase(tokenList.begin() + i);
+				else
+				{
+					// get rid of doubles
+					tokenList.erase(tokenList.begin() + i, tokenList.begin() + (i + 2));
+
+					// go back to recheck
+					i--;
+				}
+				
+			}
+		}
+	}
+
+	/*
 	// Combine subtraction forward
 	for (unsigned i = 0; i < tokenList.size(); i++)
 	{
@@ -186,18 +212,47 @@ void ExpressionList::checkTokenSyntax()
 				}
 			}
 		}
-	}
+	}*/
 
-	// Look for double operators
-	for (unsigned i = 0; i < tokenList.size(); i++)
+	// Fix bad subtraction
+	while (tokenList.front()->isOperator())
+	{
+		Operator* op = (Operator*)tokenList.front();
+
+		// remove minus, add [(-1)*]
+		if (op->getType() == OperatorToken::SUBTRACT)
+		{
+			tokenList.erase(tokenList.begin());
+			tokenList.emplace(tokenList.begin(), new Operator(OperatorToken::MULTIPLY));
+			tokenList.emplace(tokenList.begin(), new RationalExpression(-1));
+		}
+	}
+	
+	// check everything after it
+	for (unsigned i = 1; i < tokenList.size(); i++)
 	{
 		if (tokenList[i]->isOperator() && (i + 1) < tokenList.size() && tokenList[i + 1]->isOperator())
 		{
 			Operator* op1 = (Operator*)tokenList[i];
 			Operator* op2 = (Operator*)tokenList[i + 1];
 
-			if (op1->getType() == op2->getType())
+			if (op1->getType() == OperatorToken::SUBTRACT && op2->getType() == OperatorToken::L_PAREN)
+			{
 				tokenList.erase(tokenList.begin() + i);
+				tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::MULTIPLY));
+				tokenList.emplace(tokenList.begin() + i, new RationalExpression(-1));
+
+				// add plus if missing
+				if (tokenList[i - 1]->isNumber())
+					tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
+				else
+				{
+					Operator* prevOp = (Operator*)tokenList[i - 1];
+
+					if (prevOp->getType() == OperatorToken::R_PAREN)
+						tokenList.insert(tokenList.begin() + i, new Operator(OperatorToken::ADD));
+				}
+			}
 		}
 	}
 }
@@ -266,6 +321,11 @@ string ExpressionList::getInput() const
 	return input;
 }
 
+string ExpressionList::getCleanedInput() const
+{
+	return cleanedInput;
+}
+
 vector<Expression*> ExpressionList::getTokenList() const
 {
 	return tokenList;
@@ -278,9 +338,10 @@ vector<Expression*> ExpressionList::getInPostfix() const
 
 int main()
 {
+	/*
 	cout << endl;
 	History* testHistory = new History();
-	ExpressionList* unicorns = new ExpressionList("ln(6-6)");
+	ExpressionList* unicorns = new ExpressionList("5 - (6 + -(-(-(2))))");
 	//ExpressionList* unicorns = new ExpressionList("14/2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
 	cout << "Result: " << rainbows->output() << endl;
@@ -289,14 +350,5 @@ int main()
 	string storedResult = testHistory->returnList().front().second->output();
 	cout << "Stored input: " << input << endl;
 	cout << "Stored result: " << storedResult << endl;
-
-	/*
-	string historyOutput = "";
-	auto historyList = testHistory->returnList();
-	for (auto iter = historyList.begin(); iter != historyList.end(); iter++)
-	{
-		historyOutput += (*iter).first->getInput() + " = " + (*iter).second->output() + "\n";
-	}
-
-	cout << "historyOutput: " << endl << historyOutput << endl;*/
+	*/
 }
