@@ -22,14 +22,14 @@ ExpressionList::ExpressionList(string input) : input(input)
 
 	cout << "BEFORE CLEAN" << endl;
 	for (unsigned i = 0; i < tokenList.size(); i++)
-		cout << tokenList[i]->toString() << " -> ";
+		cout << tokenList[i]->toString() << " ";
 	cout << "END" << endl;
 
 	checkTokenSyntax();
 
 	cout << "AFTER CLEAN" << endl;
 	for (unsigned i = 0; i < tokenList.size(); i++)
-		cout << tokenList[i]->toString() << " -> ";
+		cout << tokenList[i]->toString() << " ";
 	cout << "END" << endl;
 
 	convertToPostfix();
@@ -166,7 +166,7 @@ void ExpressionList::checkTokenSyntax()
 			Operator* op1 = (Operator*)tokenList[i];
 			Operator* op2 = (Operator*)tokenList[i + 1];
 
-			if (op1->getType() == op2->getType())
+			if (op1->getType() == op2->getType() && (op1->getType() != OperatorToken::L_PAREN && op1->getType() != OperatorToken::R_PAREN))
 			{
 				if (op1->getType() != OperatorToken::SUBTRACT)
 					tokenList.erase(tokenList.begin() + i);
@@ -213,6 +213,47 @@ void ExpressionList::checkTokenSyntax()
 			}
 		}
 	}*/
+
+	// find numbers preceded by '-' signs
+	for (unsigned i = 1; i < tokenList.size(); i++)
+	{
+		if (tokenList[i]->isNumber() && tokenList[i - 1]->isOperator())
+		{
+			RationalExpression* num = (RationalExpression*)tokenList[i];
+			Operator* op = (Operator*)tokenList[i - 1];
+
+			if (op->getType() == OperatorToken::SUBTRACT)
+			{
+				// insert parentheses start
+				tokenList.emplace(tokenList.begin() + i, new Operator(OperatorToken::L_PAREN));
+
+				// find parentheses end
+				unsigned end = i + 1;
+				bool foundEnd = false;
+
+				while (!foundEnd)
+				{
+					if (tokenList[end]->isOperator())
+					{
+						Operator* testOp = (Operator*)tokenList[end];
+
+						if (testOp->getType() != OperatorToken::EXPONENT)
+							foundEnd = true;
+					}
+
+					end++;
+				}
+
+				// insert parentheses end
+				tokenList.emplace(tokenList.begin() + end - 1, new Operator(OperatorToken::R_PAREN));
+
+				cout << "TEST" << endl;
+				for (unsigned i = 0; i < tokenList.size(); i++)
+					cout << tokenList[i]->toString() << " ";
+				cout << "END" << endl;
+			}
+		}
+	}
 
 	// Fix bad subtraction
 	while (tokenList.front()->isOperator())
@@ -336,19 +377,18 @@ vector<Expression*> ExpressionList::getInPostfix() const
 	return postfix;
 }
 
+/*
 int main()
 {
-	/*
 	cout << endl;
 	History* testHistory = new History();
-	ExpressionList* unicorns = new ExpressionList("5 - (6 + -(-(-(2))))");
+	ExpressionList* unicorns = new ExpressionList("-1*-(ln(5))");
 	//ExpressionList* unicorns = new ExpressionList("14/2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
 	cout << "Result: " << rainbows->output() << endl;
-	testHistory->storePair(testHistory->createPair(unicorns, rainbows));
-	string input = testHistory->returnList().front().first->getInput();
-	string storedResult = testHistory->returnList().front().second->output();
-	cout << "Stored input: " << input << endl;
-	cout << "Stored result: " << storedResult << endl;
-	*/
-}
+	//testHistory->storePair(testHistory->createPair(unicorns, rainbows));
+	//string input = testHistory->returnList().front().first->getInput();
+	//string storedResult = testHistory->returnList().front().second->output();
+	//cout << "Stored input: " << input << endl;
+	//cout << "Stored result: " << storedResult << endl;
+}*/
