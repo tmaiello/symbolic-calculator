@@ -120,14 +120,46 @@ void Interpreter::interpret()
                 }
                 case OperatorToken::LN:
                 {
+                    auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    double simplify = exp1->toDouble();
+                    double lnVal = std::log(simplify);
+                    std::stringstream stream;
+                    stream << fixed << std::setprecision(6) << lnVal;
+                    std::string toString = stream.str();
+                    auto lnDone = new RationalExpression(toString);
+                    expStack.push(lnDone);
                     break;
                 }
                 case OperatorToken::LOG:
                 {
+                    auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    double simplify = exp1->toDouble();
+                    double logVal = std::log10(simplify);
+                    std::stringstream stream;
+                    stream << fixed << std::setprecision(6) << logVal;
+                    std::string toString = stream.str();
+                    auto logDone = new RationalExpression(toString);
+                    expStack.push(logDone);
                     break;
                 }
                 case OperatorToken::EXPONENT:
                 {
+                    auto exp1 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    auto exp2 = dynamic_cast<RationalExpression*>(expStack.top());
+                    expStack.pop();
+                    double double1;
+                    double1 = exp1->toDouble();
+                    double double2;
+                    double2 = exp2->toDouble();
+                    double expVal = std::pow(double1, double2);
+                    std::stringstream stream;
+                    stream << fixed << std::setprecision(6) << expVal;
+                    std::string toString = stream.str();
+                    auto expDone = new RationalExpression(toString);
+                    expStack.push(expDone);
                     break;
                 }
                 case OperatorToken::L_PAREN:
