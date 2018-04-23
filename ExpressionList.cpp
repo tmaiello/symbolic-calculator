@@ -418,10 +418,10 @@ vector<Expression*> ExpressionList::getInPostfix() const
 	return postfix;
 }
 
-int main()
+/*int main()
 {
 	cout << endl;
-	ExpressionList* unicorns = new ExpressionList("2(6)");
+	ExpressionList* unicorns = new ExpressionList("0/0");
 	//ExpressionList* unicorns = new ExpressionList("14/2");
 	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
 	cout << "REACHED END" << endl;
@@ -431,4 +431,4 @@ int main()
 	//string storedResult = testHistory->returnList().front().second->output();
 	//cout << "Stored input: " << input << endl;
 	//cout << "Stored result: " << storedResult << endl;
-}
+}*/
