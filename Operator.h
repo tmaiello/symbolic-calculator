@@ -46,22 +46,39 @@ class Operator : public Expression
 {
 	private:
 
-	// fields
-	const OperatorToken type;		// stores the type of OperatorToken this operator is
+	/* fields */
+
+	// stores the type of OperatorToken this operator is
+	const OperatorToken type;
+
 
 	public:
 
-	// constructor
-	Operator(OperatorToken type);	// create a new operator with the provided OperatorToken type
+	/* constructor */
 
-	// accessors
-	OperatorToken getType() const;	// return the OperatorToken type of this object
-	int getPrecedence() const;		// returns the precedence (lower is first) of this operator
+	// create a new operator with the provided OperatorToken type
+	Operator(OperatorToken type);
 
-	// utility methods
-	string toString() const override;	// return the char/string representation of this operator
-	bool isNumber() const override;		// always returns false, as Operator is not of type RationalExpression
-	bool isOperator() const override;	// always returns true, as Operator is always of type Operator
+	
+	/* accessors */
+
+	// return the OperatorToken type of this object
+	OperatorToken getType() const;
+
+	// returns the precedence (lower is first) of this operator
+	int getPrecedence() const;
+
+	
+	/* utility methods */
+
+	// return the char/string representation of this operator
+	string toString() const override;
+
+	// always returns false, as Operator is not of type RationalExpression
+	bool isNumber() const override;	
+
+	// always returns true, as Operator is always of type Operator
+	bool isOperator() const override;
 };
 
 /*

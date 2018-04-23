@@ -21,14 +21,20 @@ using namespace std;
 
 class History
 {
+	private:
 
-private:
+	/* fields */
     list<pair<ExpressionList*, Interpreter*>> listOfPairs;
 
-public:
+
+	public:
+
     pair<ExpressionList*, Interpreter*> createPair(ExpressionList *object1, Interpreter *object2);
+
     void storePair(pair<ExpressionList*, Interpreter*> pair1);
+
     list<pair<ExpressionList*, Interpreter*>> returnList();
+
     bool checkList();
 };
 

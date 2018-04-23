@@ -19,31 +19,60 @@ class ExpressionList
 {
 	private:
 
-	// fields
-	const string input;		// raw string provided to this object
-	string cleanedInput;	// cleaned string without invalid chars
-	vector<Expression*> tokenList;		// validated list of token representations of pieces of the input
-	vector<Expression*> postfix;		// token list in postfix notation
+	/* fields */
 
-	// parser helper methods
-	static bool isNumber(char toTest);		// returns true if the test char is a numerical char
-	static bool isValidChar(char toTest);	// returns true if the test char is either numerical, or is associated with one of the valid OperatorToken types
+	// raw string provided to this object
+	const string input;
+
+	// cleaned string without invalid chars
+	string cleanedInput;
+
+	// validated list of token representations of pieces of the input
+	vector<Expression*> tokenList;
+
+	// token list in postfix notation
+	vector<Expression*> postfix;
+
+
+	/* parser helper methods */
+
+	// returns true if the test char is a numerical char
+	static bool isNumber(char toTest);
+
+	// returns true if the test char is either numerical, or is associated with one of the valid OperatorToken types
+	static bool isValidChar(char toTest);
 	
-	// construction methods
-	void cleanInputString();	// cleans whitespace and invalid chars out of the input string, and simplifies functions/irrationals
-	void processToTokens();		// turns the cleaned input string into a vector of number/operator tokens
-	void checkTokenSyntax();	// cleans and corrects common errors in calculator input
-	void convertToPostfix();	// resorts the token list into postfix notation
+	
+	/* construction methods */
+
+	// cleans whitespace and invalid chars out of the input string, and simplifies functions/irrationals
+	void cleanInputString();
+
+	// turns the cleaned input string into a vector of number/operator tokens
+	void processToTokens();
+
+	// cleans and corrects common errors in calculator input
+	void checkTokenSyntax();
+
+	// resorts the token list into postfix notation
+	void convertToPostfix();
+
 
 	public:
 
-	// constructor
+	/* constructor */
+
 	ExpressionList(string input);
 
-	// accessors
+
+	/* accessors */
+	
 	string getInput() const;
+	
 	string getCleanedInput() const;
+	
 	vector<Expression*> getTokenList() const;
+	
 	vector<Expression*> getInPostfix() const;
 };
 
