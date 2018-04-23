@@ -35,7 +35,7 @@ RationalExpression::RationalExpression(std::string value)
     stringSize = stringValue.size();
     bool sign = false;
     char stringFirst = stringValue.at(0);
-    if (stringFirst == '')
+    if (stringFirst == '-')
     {
         sign = true;
     }
