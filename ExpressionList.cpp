@@ -200,7 +200,7 @@ void ExpressionList::checkTokenSyntax()
 				unsigned end = i + 1;
 				bool foundEnd = false;
 
-				while (!foundEnd)
+				while (!foundEnd && end < tokenList.size())
 				{
 					if (tokenList[end]->isOperator())
 					{
@@ -236,6 +236,8 @@ void ExpressionList::checkTokenSyntax()
 			tokenList.emplace(tokenList.begin(), new Operator(OperatorToken::MULTIPLY));
 			tokenList.emplace(tokenList.begin(), new RationalExpression(-1));
 		}
+		else
+			break;
 	}
 	
 	// check everything after it
@@ -344,4 +346,18 @@ vector<Expression*> ExpressionList::getTokenList() const
 vector<Expression*> ExpressionList::getInPostfix() const
 {
 	return postfix;
+}
+
+int main()
+{
+	cout << endl;
+	ExpressionList* unicorns = new ExpressionList("ln(e)");
+	//ExpressionList* unicorns = new ExpressionList("14/2");
+	Interpreter* rainbows = new Interpreter(unicorns->getInPostfix());
+	cout << "Result: " << rainbows->output() << endl;
+	//testHistory->storePair(testHistory->createPair(unicorns, rainbows));
+	//string input = testHistory->returnList().front().first->getInput();
+	//string storedResult = testHistory->returnList().front().second->output();
+	//cout << "Stored input: " << input << endl;
+	//cout << "Stored result: " << storedResult << endl;
 }
