@@ -18,26 +18,33 @@ using namespace std;
 class ExpressionList
 {
 	private:
-	const string input;
-	string cleanedInput;
-	vector<Expression*> tokenList;
-	vector<Expression*> postfix;
 
-	static bool isNumber(char toTest);
+	// fields
+	const string input;		// raw string provided to this object
+	string cleanedInput;	// cleaned string without invalid chars
+	vector<Expression*> tokenList;		// validated list of token representations of pieces of the input
+	vector<Expression*> postfix;		// token list in postfix notation
+
+	// parser helper methods
+	static bool isNumber(char toTest);		// returns true if the test char is a numerical char
+	static bool isValidChar(char toTest);	// returns true if the test char is either numerical, or 
 	
+	// construction methods
 	void cleanInputString();
 	void processToTokens();
 	void checkTokenSyntax();
 	void convertToPostfix();
 
 	public:
+
+	// constructor
 	ExpressionList(string input);
+
+	// accessors
 	string getInput() const;
 	string getCleanedInput() const;
 	vector<Expression*> getTokenList() const;
 	vector<Expression*> getInPostfix() const;
-
-	static bool isValidChar(char toTest);
 };
 
 #endif
