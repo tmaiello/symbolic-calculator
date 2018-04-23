@@ -44,7 +44,7 @@ RationalExpression::RationalExpression(std::string value)
         auto integer = RationalExpression(beforeDecimal);
         auto pair = std::make_pair(stringValue , period);
         auto decimal = makeDecimalFraction(pair);
-        RationalExpression *finalAnswer = NULL;
+        RationalExpression *finalAnswer = nullptr;
         if (decimal.second)
         {
             finalAnswer = add(integer, decimal.first);
@@ -137,17 +137,10 @@ RationalExpression* RationalExpression::simplify(RationalExpression input)
     numerator = input.numerator;
     long long denominator;
     denominator = input.denominator;
-    if (input.denominator != 0)
-	{
-        for (long long base = input.maxValue(); base > 1; base--)
-		{
-            if ((numerator % base == 0) && (denominator % base == 0))
-			{
-                numerator = numerator / base;
-                denominator = denominator / base;
-            }
-        }
-    }
+    long long toDivideBy;
+    toDivideBy = input.gcd();
+    numerator = numerator / toDivideBy;
+    denominator = denominator / toDivideBy;
     auto toReturn = new RationalExpression(numerator, denominator);
     return toReturn;
 }
@@ -182,6 +175,21 @@ std::string RationalExpression::toString() const
 		return "(" + std::to_string(numerator) + " / " + std::to_string(denominator) + ") = " + std::to_string(toDouble());
 	else
 		return std::to_string(numerator);
+}
+
+long long RationalExpression::gcd()
+{
+    long long num1;
+    num1 = numerator;
+    long long num2;
+    num2 = denominator;
+    long long tmp;
+    while (num2 != 0) {
+        tmp = num2;
+        num2 = num1 % num2;
+        num1 = tmp;
+    }
+    return num1;
 }
 
 bool RationalExpression::isNumber() const
