@@ -155,6 +155,9 @@ void ExpressionList::processToTokens()
 		
 		if (isNumber(cleanedInput[i]))
 		{
+			// initialize result
+			string numString;
+
 			// count until end of number
 			int end = i;
 			int periodFound = false;
@@ -175,8 +178,14 @@ void ExpressionList::processToTokens()
 			if (cleanedInput[end - 1] == '.')
 				throw invalid_argument("Period delimiter found at end of number");
 
+			// try to handle ".5"
+			if (i > 0 && cleanedInput[i - 1] == '.')
+				numString = "0." + cleanedInput.substr(i, end - i);
+			else
+				numString = cleanedInput.substr(i, end - i);
+
 			// process the whole number
-			tokenList.push_back(new RationalExpression(cleanedInput.substr(i, end - i)));
+			tokenList.push_back(new RationalExpression(numString));
 
 			// skip to right before the end, so when i++ runs for the next iteration, i points to the space after the just-processed number
 			i = end - 1;
