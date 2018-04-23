@@ -27,17 +27,20 @@ class ExpressionList
 
 	// parser helper methods
 	static bool isNumber(char toTest);		// returns true if the test char is a numerical char
-	static bool isValidChar(char toTest);	// returns true if the test char is either numerical, or 
+	static bool isValidChar(char toTest);	// returns true if the test char is either numerical, or is associated with one of the valid OperatorToken types
 	
 	// construction methods
-	void cleanInputString();
-	void processToTokens();
-	void checkTokenSyntax();
-	void convertToPostfix();
+	void cleanInputString();	// cleans whitespace and invalid chars out of the input string, and simplifies functions/irrationals
+	void processToTokens();		// turns the cleaned input string into a vector of number/operator tokens
+	void checkTokenSyntax();	// cleans and corrects common errors in calculator input
+	void convertToPostfix();	// resorts the token list into postfix notation
 
 	public:
 
-	// constructor
+	/*
+	*	[ ExpressionList Constructor ]
+	*	This constructor is vitally important to the project.
+	*/
 	ExpressionList(string input);
 
 	// accessors
