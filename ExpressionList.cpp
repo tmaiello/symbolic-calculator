@@ -96,7 +96,7 @@ void ExpressionList::processToTokens()
 			{
 				if (cleanedInput[i] == '.')
 					if (periodFound)
-						throw new invalid_argument("More than one period delimiter found in a number");
+						throw invalid_argument("More than one period delimiter found in a number");
 					else
 						periodFound = true;
 
@@ -105,7 +105,7 @@ void ExpressionList::processToTokens()
 
 			// check for invalid period at end
 			if (cleanedInput[end - 1] == '.')
-				throw new invalid_argument("Period delimiter found at end of number");
+				throw invalid_argument("Period delimiter found at end of number");
 
 			// process the whole number
 			tokenList.push_back(new RationalExpression(cleanedInput.substr(i, end - i)));
@@ -143,7 +143,7 @@ void ExpressionList::checkTokenSyntax()
 
 		// e.g. ")("
 		if (parenthesesCount < 0)
-			throw new invalid_argument("Parentheses out of order");
+			throw invalid_argument("Parentheses out of order");
 	}
 
 	// Look for double operators
