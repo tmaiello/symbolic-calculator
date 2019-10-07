@@ -34,16 +34,5 @@ list<pair<ExpressionList*, Interpreter*>> History::returnList()
 
 bool History::checkList()
 {
-	bool isEmpty = true;
-
-    if (listOfPairs.empty())
-	{
-        isEmpty = true;
-    }
-    else if (!listOfPairs.empty())
-	{
-        isEmpty = false;
-    }
-
-	return isEmpty;
+	return listOfPairs.empty();
 }
